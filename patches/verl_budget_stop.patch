@@ -1,0 +1,53 @@
+diff --git a/upstream/Rethinking-OPD/verl/verl/trainer/ppo/ray_trainer.py b/upstream/Rethinking-OPD/verl/verl/trainer/ppo/ray_trainer.py
+index 276094c..c411149 100644
+--- a/upstream/Rethinking-OPD/verl/verl/trainer/ppo/ray_trainer.py
++++ b/upstream/Rethinking-OPD/verl/verl/trainer/ppo/ray_trainer.py
+@@ -1017,10 +1017,39 @@ class RayPPOTrainer:
+         )
+         next_step_profile = False
+ 
++        # [Project B] 墙钟预算停止（协议 3.2）：PB_BUDGET_SEC>0 时，每步结束把该步墙钟秒数记入台账；
++        # 下一步开始前若累计 >= 预算，则保存上一步的检查点并结束。台账只保留不超过已恢复步数的记录，故障损失不计入。
++        import json as _pb_json
++        import time as _pb_time
++
++        pb_budget = float(os.environ.get("PB_BUDGET_SEC", "0") or 0)
++        pb_ledger_path = os.path.join(self.config.trainer.default_local_dir, "budget_ledger.json")
++        pb_ledger = {}
++        if os.path.exists(pb_ledger_path):
++            with open(pb_ledger_path) as f:
++                pb_ledger = {int(k): v for k, v in _pb_json.load(f)["step_sec"].items()}
++            pb_ledger = {k: v for k, v in pb_ledger.items() if k < self.global_steps}
++
++        def _pb_write_ledger(stopped=False):
++            os.makedirs(os.path.dirname(pb_ledger_path), exist_ok=True)
++            with open(pb_ledger_path, "w") as f:
++                _pb_json.dump(
++                    {"budget_sec": pb_budget, "spent_sec": sum(pb_ledger.values()), "stopped_by_budget": stopped,
++                     "step_sec": {str(k): v for k, v in sorted(pb_ledger.items())}}, f, indent=1)
++
+         for epoch in range(self.config.trainer.total_epochs):
+             for batch_dict in self.train_dataloader:
+                 metrics = {}
+                 timing_raw = {}
++                pb_iter_start = _pb_time.time()
++                if pb_budget > 0 and sum(pb_ledger.values()) >= pb_budget:
++                    self.global_steps -= 1  # 回到最后一次完成的更新
++                    if self.config.trainer.save_freq <= 0 or self.global_steps % self.config.trainer.save_freq != 0:
++                        self._save_checkpoint()
++                    _pb_write_ledger(stopped=True)
++                    print(f"[Project B] 预算用完：{sum(pb_ledger.values()):.0f}s >= {pb_budget:.0f}s，终点 = 第 {self.global_steps} 步")
++                    progress_bar.close()
++                    return
+ 
+                 with marked_timer("start_profile", timing_raw):
+                     self._start_profiling(
+@@ -2337,6 +2366,8 @@ class RayPPOTrainer:
+                 logger.log(data=metrics, step=self.global_steps)
+ 
+                 progress_bar.update(1)
++                pb_ledger[self.global_steps] = round(_pb_time.time() - pb_iter_start, 2)
++                _pb_write_ledger()
+                 self.global_steps += 1
+ 
+                 if (

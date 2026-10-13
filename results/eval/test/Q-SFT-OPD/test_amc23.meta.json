@@ -1,0 +1,23 @@
+{
+  "name": "Q-SFT-OPD",
+  "model": "/root/autodl-tmp/project-b-opd/runs/train/Q-SFT-OPD/hf/step_40",
+  "data": "/root/autodl-tmp/project-b-opd/data/prepared/test_amc23.parquet",
+  "rows": 40,
+  "k": 16,
+  "max_tokens": 8192,
+  "temperature": 0.7,
+  "top_p": 0.95,
+  "seed": 42,
+  "enable_thinking": "false",
+  "tp": 1,
+  "top_k": -1,
+  "stop_token_ids": [
+    151645,
+    151643
+  ],
+  "dtype": "bfloat16",
+  "vllm": "0.11.0",
+  "elapsed_sec": 569.3,
+  "generated_tokens": 1464036,
+  "example_prompt": "<|im_start|>user\nCities $A$ and $B$ are $45$ miles apart. Alicia lives in $A$ and Beth lives in $B$. Alicia bikes towards $B$ at 18 miles per hour. Leaving at the same time, Beth bikes toward $A$ at 12 miles per hour. How many miles from City $A$ will they be when they meet? Please reason step by step, and put your final answer within \\boxed{}.<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n"
+}

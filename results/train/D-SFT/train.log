@@ -1,0 +1,775 @@
++ export TENSORBOARD_DIR=/root/autodl-tmp/project-b-opd/runs/train/D-SFT/tensorboard PYTHONUNBUFFERED=1 HYDRA_FULL_ERROR=1
++ TENSORBOARD_DIR=/root/autodl-tmp/project-b-opd/runs/train/D-SFT/tensorboard
++ PYTHONUNBUFFERED=1
++ HYDRA_FULL_ERROR=1
++ case "$SFT_DATA" in
++ SFT_DATA=/root/autodl-tmp/project-b-opd/runs/sft_data/D-SFT/sft_data.parquet
+++ date -Is
++ echo 'date: 2026-10-10T12:20:06+08:00'
++ echo 'student: /root/autodl-tmp/models/S0'
++ echo 'sft_data: /root/autodl-tmp/project-b-opd/runs/sft_data/D-SFT/sft_data.parquet'
+++ sha256sum /root/autodl-tmp/project-b-opd/runs/sft_data/D-SFT/sft_data.parquet
+++ cut '-d ' -f1
++ echo 'sft_data_sha256: 102a40ada6b3b9f5eeb34c1fb14e7972254108bde91b00bd197161f90a5eed2f'
++ echo 'ngpus: 2'
++ echo 'dtype: fp32'
+++ git -C /root/autodl-tmp/project-b-opd rev-parse HEAD
+++ echo none
++ echo 'git: none'
++ nvidia-smi --query-gpu=name,memory.total --format=csv,noheader
+++ date +%s
++ T0=1791606007
++ torchrun --standalone --nnodes=1 --nproc_per_node=2 -m verl.trainer.fsdp_sft_trainer data.train_files=/root/autodl-tmp/project-b-opd/runs/sft_data/D-SFT/sft_data.parquet data.val_files=/root/autodl-tmp/project-b-opd/runs/sft_data/D-SFT/sft_data.parquet data.val_max_samples=32 data.prompt_key=prompt data.response_key=response data.multiturn.enable=false data.train_batch_size=64 data.micro_batch_size_per_gpu=1 data.max_length=8192 data.truncation=error model.partial_pretrain=/root/autodl-tmp/models/S0 model.fsdp_config.model_dtype=fp32 model.enable_gradient_checkpointing=True use_remove_padding=True optim.lr=1e-5 optim.lr_scheduler=cosine optim.lr_warmup_steps_ratio=0.05 trainer.total_epochs=1 trainer.total_training_steps=null trainer.save_freq=70 trainer.max_ckpt_to_keep=1 trainer.test_freq=-1 'trainer.logger=['\''console'\'','\''tensorboard'\'']' trainer.project_name=project-b-opd trainer.experiment_name=D-SFT trainer.n_gpus_per_node=2 trainer.default_local_dir=/root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt 'trainer.checkpoint.save_contents=['\''model'\'','\''optimizer'\'','\''extra'\'','\''hf_model'\'']' trainer.resume_mode=auto
+/root/pb-venv/lib/python3.12/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+W1010 12:20:09.693000 209651 torch/distributed/run.py:774] 
+W1010 12:20:09.693000 209651 torch/distributed/run.py:774] *****************************************
+W1010 12:20:09.693000 209651 torch/distributed/run.py:774] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W1010 12:20:09.693000 209651 torch/distributed/run.py:774] *****************************************
+/root/pb-venv/lib/python3.12/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/root/pb-venv/lib/python3.12/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+dataset len: 36091
+dataset len: 36091
+dataset len: 36091
+selected 32 random samples out of 36091
+Normalize batch size by dp 2
+Using sequence parallel size: 1
+Using remove padding: True
+Using FSDP rank 0 and size 2 for data distribution
+`torch_dtype` is deprecated! Use `dtype` instead!
+Flash Attention 2 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2ForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", dtype=torch.float16)`
+Flash Attention 2 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2Model is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", dtype=torch.float16)`
+dataset len: 36091
+selected 32 random samples out of 36091
+`torch_dtype` is deprecated! Use `dtype` instead!
+Flash Attention 2 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2ForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", dtype=torch.float16)`
+Flash Attention 2 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2Model is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", dtype=torch.float16)`
+Monkey patch _flash_attention_forward in transformers.integrations.flash_attention
+Skipping monkey patch for Qwen2ForCausalLM as use_fused_kernels is False or fused_kernels_backend is None
+Monkey patch _flash_attention_forward in transformers.integrations.flash_attention
+Skipping monkey patch for Qwen2ForCausalLM as use_fused_kernels is False or fused_kernels_backend is None
+functools.partial(<function _or_policy at 0x7f34210aa8e0>, policies=[functools.partial(<function transformer_auto_wrap_policy at 0x7f34210aa7a0>, transformer_layer_cls={<class 'transformers.models.qwen2.modeling_qwen2.Qwen2DecoderLayer'>})])
+NCCL version 2.27.3+cuda12.9
+Number of steps/epoch 563, number of epochs 1, total number of steps 563
+{'optim': {'_target_': 'verl.workers.config.FSDPOptimizerConfig', 'optimizer': 'AdamW', 'optimizer_impl': 'torch.optim', 'lr': 1e-05, 'lr_warmup_steps_ratio': 0.05, 'total_training_steps': -1, 'weight_decay': 0.01, 'lr_warmup_steps': -1, 'betas': [0.9, 0.95], 'clip_grad': 1.0, 'min_lr_ratio': 0.0, 'num_cycles': 0.5, 'lr_scheduler_type': 'constant', 'warmup_style': None, 'override_optimizer_config': None, 'lr_scheduler': 'cosine'}, 'data': {'train_batch_size': 32, 'micro_batch_size': None, 'micro_batch_size_per_gpu': 1, 'train_files': '/root/autodl-tmp/project-b-opd/runs/sft_data/D-SFT/sft_data.parquet', 'val_files': '/root/autodl-tmp/project-b-opd/runs/sft_data/D-SFT/sft_data.parquet', 'train_max_samples': -1, 'val_max_samples': 32, 'prompt_key': 'prompt', 'response_key': 'response', 'prompt_dict_keys': None, 'response_dict_keys': None, 'multiturn': {'enable': False, 'messages_key': 'messages', 'tools_key': 'tools', 'enable_thinking_key': 'enable_thinking'}, 'max_length': 8192, 'truncation': 'error', 'balance_dp_token': False, 'chat_template': None, 'custom_cls': {'path': None, 'name': None}, 'use_shm': False, 'apply_chat_template_kwargs': {}}, 'model': {'partial_pretrain': '/root/autodl-tmp/models/S0', 'use_shm': False, 'fsdp_config': {'model_dtype': 'fp32', 'wrap_policy': {'min_num_params': 0}, 'cpu_offload': False, 'offload_params': False}, 'external_lib': None, 'enable_gradient_checkpointing': True, 'trust_remote_code': False, 'lora_rank': 0, 'lora_alpha': 16, 'target_modules': 'all-linear', 'use_liger': False, 'strategy': 'fsdp2'}, 'ulysses_sequence_parallel_size': 1, 'use_remove_padding': True, 'trainer': {'default_local_dir': '/root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt', 'default_hdfs_dir': None, 'project_name': 'project-b-opd', 'experiment_name': 'D-SFT', 'total_epochs': 1, 'total_training_steps': None, 'logger': ['console', 'tensorboard'], 'seed': 1, 'save_freq': 70, 'test_freq': -1, 'nnodes': 1, 'n_gpus_per_node': 2, 'max_ckpt_to_keep': 1, 'resume_mode': 'auto', 'resume_from_path': None, 'checkpoint': {'save_contents': ['model', 'optimizer', 'extra', 'hf_model'], 'load_contents': '${trainer.checkpoint.save_contents}'}, 'device': 'cuda'}}
+Saving tensorboard log to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/tensorboard.
+Epoch 1/1:   0%|          | 0/563 [00:00<?, ?it/s]step:1 - train/loss:0.41423144936561584 - train/lr(1e-3):0.00035714285714285714 - train/time(s):55.42383432388306
+Epoch 1/1:   0%|          | 1/563 [00:56<8:50:02, 56.59s/it]step:2 - train/loss:0.4057718515396118 - train/lr(1e-3):0.0007142857142857143 - train/time(s):52.92135834693909
+Epoch 1/1:   0%|          | 2/563 [01:49<8:28:57, 54.43s/it]step:3 - train/loss:0.3984448313713074 - train/lr(1e-3):0.0010714285714285713 - train/time(s):52.673442125320435
+Epoch 1/1:   1%|          | 3/563 [02:42<8:20:33, 53.63s/it]step:4 - train/loss:0.3940688371658325 - train/lr(1e-3):0.0014285714285714286 - train/time(s):52.58657908439636
+Epoch 1/1:   1%|          | 4/563 [03:34<8:15:50, 53.22s/it]step:5 - train/loss:0.42130622267723083 - train/lr(1e-3):0.0017857142857142859 - train/time(s):53.46212601661682
+Epoch 1/1:   1%|          | 5/563 [04:28<8:15:46, 53.31s/it]step:6 - train/loss:0.4227595329284668 - train/lr(1e-3):0.0021428571428571425 - train/time(s):52.935333490371704
+Epoch 1/1:   1%|          | 6/563 [05:21<8:13:43, 53.18s/it]step:7 - train/loss:0.40431898832321167 - train/lr(1e-3):0.0025 - train/time(s):53.27496838569641
+Epoch 1/1:   1%|          | 7/563 [06:14<8:13:07, 53.21s/it]step:8 - train/loss:0.40496909618377686 - train/lr(1e-3):0.002857142857142857 - train/time(s):52.931751012802124
+Epoch 1/1:   1%|▏         | 8/563 [07:07<8:11:24, 53.13s/it]step:9 - train/loss:0.3935783803462982 - train/lr(1e-3):0.0032142857142857147 - train/time(s):53.21990156173706
+Epoch 1/1:   2%|▏         | 9/563 [08:00<8:10:48, 53.16s/it]step:10 - train/loss:0.40663325786590576 - train/lr(1e-3):0.0035714285714285718 - train/time(s):53.20227909088135
+Epoch 1/1:   2%|▏         | 10/563 [08:53<8:10:04, 53.17s/it]step:11 - train/loss:0.4117637276649475 - train/lr(1e-3):0.003928571428571429 - train/time(s):52.956443548202515
+Epoch 1/1:   2%|▏         | 11/563 [09:46<8:08:35, 53.11s/it]step:12 - train/loss:0.3902117609977722 - train/lr(1e-3):0.004285714285714285 - train/time(s):52.827930212020874
+Epoch 1/1:   2%|▏         | 12/563 [10:39<8:06:56, 53.02s/it]step:13 - train/loss:0.36093348264694214 - train/lr(1e-3):0.004642857142857144 - train/time(s):53.304431438446045
+Epoch 1/1:   2%|▏         | 13/563 [11:32<8:06:50, 53.11s/it]step:14 - train/loss:0.38548722863197327 - train/lr(1e-3):0.005 - train/time(s):53.002644300460815
+Epoch 1/1:   2%|▏         | 14/563 [12:25<8:05:40, 53.08s/it]step:15 - train/loss:0.358924925327301 - train/lr(1e-3):0.005357142857142857 - train/time(s):53.263733863830566
+Epoch 1/1:   3%|▎         | 15/563 [13:19<8:05:18, 53.14s/it]step:16 - train/loss:0.36812105774879456 - train/lr(1e-3):0.005714285714285714 - train/time(s):52.7979416847229
+Epoch 1/1:   3%|▎         | 16/563 [14:12<8:03:30, 53.04s/it]step:17 - train/loss:0.3829561471939087 - train/lr(1e-3):0.006071428571428571 - train/time(s):52.93600249290466
+Epoch 1/1:   3%|▎         | 17/563 [15:04<8:02:21, 53.01s/it]step:18 - train/loss:0.3498195707798004 - train/lr(1e-3):0.006428571428571429 - train/time(s):53.049715995788574
+Epoch 1/1:   3%|▎         | 18/563 [15:58<8:01:36, 53.02s/it]step:19 - train/loss:0.3523263931274414 - train/lr(1e-3):0.006785714285714287 - train/time(s):53.10478496551514
+Epoch 1/1:   3%|▎         | 19/563 [16:51<8:00:57, 53.05s/it]step:20 - train/loss:0.32937586307525635 - train/lr(1e-3):0.0071428571428571435 - train/time(s):52.68676400184631
+Epoch 1/1:   4%|▎         | 20/563 [17:43<7:59:06, 52.94s/it]step:21 - train/loss:0.3512824773788452 - train/lr(1e-3):0.0075000000000000015 - train/time(s):52.72288370132446
+Epoch 1/1:   4%|▎         | 21/563 [18:36<7:57:38, 52.88s/it]step:22 - train/loss:0.34123653173446655 - train/lr(1e-3):0.007857142857142858 - train/time(s):52.81986403465271
+Epoch 1/1:   4%|▍         | 22/563 [19:29<7:56:37, 52.86s/it]step:23 - train/loss:0.3442952036857605 - train/lr(1e-3):0.008214285714285714 - train/time(s):53.13984251022339
+Epoch 1/1:   4%|▍         | 23/563 [20:22<7:56:30, 52.95s/it]step:24 - train/loss:0.33208197355270386 - train/lr(1e-3):0.00857142857142857 - train/time(s):52.831366300582886
+Epoch 1/1:   4%|▍         | 24/563 [21:15<7:55:19, 52.91s/it]step:25 - train/loss:0.32911252975463867 - train/lr(1e-3):0.00892857142857143 - train/time(s):52.995898723602295
+Epoch 1/1:   4%|▍         | 25/563 [22:08<7:54:41, 52.94s/it]step:26 - train/loss:0.3300536274909973 - train/lr(1e-3):0.009285714285714288 - train/time(s):52.70739793777466
+Epoch 1/1:   5%|▍         | 26/563 [23:01<7:53:11, 52.87s/it]step:27 - train/loss:0.33244794607162476 - train/lr(1e-3):0.009642857142857144 - train/time(s):52.94188404083252
+Epoch 1/1:   5%|▍         | 27/563 [23:53<7:52:30, 52.89s/it]step:28 - train/loss:0.3356086015701294 - train/lr(1e-3):0.01 - train/time(s):52.94162034988403
+Epoch 1/1:   5%|▍         | 28/563 [24:46<7:51:46, 52.91s/it]step:29 - train/loss:0.31697702407836914 - train/lr(1e-3):0.009999913795300545 - train/time(s):53.028401613235474
+Epoch 1/1:   5%|▌         | 29/563 [25:39<7:51:13, 52.95s/it]step:30 - train/loss:0.3167036175727844 - train/lr(1e-3):0.009999655184174672 - train/time(s):53.05038547515869
+Epoch 1/1:   5%|▌         | 30/563 [26:33<7:50:37, 52.98s/it]step:31 - train/loss:0.31571459770202637 - train/lr(1e-3):0.009999224175539785 - train/time(s):52.911274909973145
+Epoch 1/1:   6%|▌         | 31/563 [27:25<7:49:34, 52.96s/it]step:32 - train/loss:0.3162435293197632 - train/lr(1e-3):0.00999862078425787 - train/time(s):53.18359088897705
+Epoch 1/1:   6%|▌         | 32/563 [28:19<7:49:17, 53.03s/it]step:33 - train/loss:0.30343419313430786 - train/lr(1e-3):0.009997845031134992 - train/time(s):53.0010941028595
+Epoch 1/1:   6%|▌         | 33/563 [29:12<7:48:21, 53.02s/it]step:34 - train/loss:0.327558308839798 - train/lr(1e-3):0.009996896942920578 - train/time(s):53.15009880065918
+Epoch 1/1:   6%|▌         | 34/563 [30:05<7:47:49, 53.06s/it]step:35 - train/loss:0.31654584407806396 - train/lr(1e-3):0.009995776552306492 - train/time(s):52.773449420928955
+Epoch 1/1:   6%|▌         | 35/563 [30:58<7:46:11, 52.98s/it]step:36 - train/loss:0.32133495807647705 - train/lr(1e-3):0.009994483897925904 - train/time(s):52.89965605735779
+Epoch 1/1:   6%|▋         | 36/563 [31:50<7:45:06, 52.95s/it]step:37 - train/loss:0.33455559611320496 - train/lr(1e-3):0.009993019024351974 - train/time(s):52.97242283821106
+Epoch 1/1:   7%|▋         | 37/563 [32:43<7:44:17, 52.96s/it]step:38 - train/loss:0.32070088386535645 - train/lr(1e-3):0.009991381982096294 - train/time(s):52.5517692565918
+Epoch 1/1:   7%|▋         | 38/563 [33:36<7:42:20, 52.84s/it]step:39 - train/loss:0.29538172483444214 - train/lr(1e-3):0.009989572827607153 - train/time(s):53.13829207420349
+Epoch 1/1:   7%|▋         | 39/563 [34:29<7:42:15, 52.93s/it]step:40 - train/loss:0.3074939250946045 - train/lr(1e-3):0.009987591623267606 - train/time(s):52.874680042266846
+Epoch 1/1:   7%|▋         | 40/563 [35:22<7:41:14, 52.91s/it]step:41 - train/loss:0.3110503554344177 - train/lr(1e-3):0.009985438437393301 - train/time(s):52.869494676589966
+Epoch 1/1:   7%|▋         | 41/563 [36:15<7:40:15, 52.90s/it]step:42 - train/loss:0.30381202697753906 - train/lr(1e-3):0.009983113344230129 - train/time(s):53.176841735839844
+Epoch 1/1:   7%|▋         | 42/563 [37:08<7:40:06, 52.99s/it]step:43 - train/loss:0.31192147731781006 - train/lr(1e-3):0.00998061642395168 - train/time(s):52.740142822265625
+Epoch 1/1:   8%|▊         | 43/563 [38:01<7:38:35, 52.91s/it]step:44 - train/loss:0.3094099164009094 - train/lr(1e-3):0.009977947762656456 - train/time(s):52.7631938457489
+Epoch 1/1:   8%|▊         | 44/563 [38:54<7:37:19, 52.87s/it]step:45 - train/loss:0.3198603093624115 - train/lr(1e-3):0.009975107452364915 - train/time(s):53.29465293884277
+Epoch 1/1:   8%|▊         | 45/563 [39:47<7:37:33, 53.00s/it]step:46 - train/loss:0.3103432059288025 - train/lr(1e-3):0.009972095591016293 - train/time(s):53.2098343372345
+Epoch 1/1:   8%|▊         | 46/563 [40:40<7:37:13, 53.06s/it]step:47 - train/loss:0.3281627297401428 - train/lr(1e-3):0.009968912282465237 - train/time(s):53.01226353645325
+Epoch 1/1:   8%|▊         | 47/563 [41:33<7:36:13, 53.05s/it]step:48 - train/loss:0.2989482283592224 - train/lr(1e-3):0.009965557636478203 - train/time(s):52.8402144908905
+Epoch 1/1:   9%|▊         | 48/563 [42:26<7:34:48, 52.99s/it]step:49 - train/loss:0.31260159611701965 - train/lr(1e-3):0.009962031768729694 - train/time(s):53.1638298034668
+Epoch 1/1:   9%|▊         | 49/563 [43:19<7:34:23, 53.04s/it]step:50 - train/loss:0.2996845245361328 - train/lr(1e-3):0.009958334800798257 - train/time(s):52.89144492149353
+Epoch 1/1:   9%|▉         | 50/563 [44:12<7:33:07, 53.00s/it]step:51 - train/loss:0.3182290196418762 - train/lr(1e-3):0.009954466860162294 - train/time(s):53.0340690612793
+Epoch 1/1:   9%|▉         | 51/563 [45:05<7:32:21, 53.01s/it]step:52 - train/loss:0.30404359102249146 - train/lr(1e-3):0.009950428080195675 - train/time(s):53.037353515625
+Epoch 1/1:   9%|▉         | 52/563 [45:58<7:31:33, 53.02s/it]step:53 - train/loss:0.30029234290122986 - train/lr(1e-3):0.00994621860016312 - train/time(s):52.99831771850586
+Epoch 1/1:   9%|▉         | 53/563 [46:51<7:30:37, 53.01s/it]step:54 - train/loss:0.3107892870903015 - train/lr(1e-3):0.009941838565215414 - train/time(s):52.79973793029785
+Epoch 1/1:  10%|▉         | 54/563 [47:44<7:29:12, 52.95s/it]step:55 - train/loss:0.3031814992427826 - train/lr(1e-3):0.009937288126384397 - train/time(s):53.30322980880737
+Epoch 1/1:  10%|▉         | 55/563 [48:37<7:29:13, 53.06s/it]step:56 - train/loss:0.29891735315322876 - train/lr(1e-3):0.009932567440577751 - train/time(s):52.82400631904602
+Epoch 1/1:  10%|▉         | 56/563 [49:30<7:27:45, 52.99s/it]step:57 - train/loss:0.29409724473953247 - train/lr(1e-3):0.0099276766705736 - train/time(s):52.98951983451843
+Epoch 1/1:  10%|█         | 57/563 [50:23<7:26:52, 52.99s/it]step:58 - train/loss:0.31261223554611206 - train/lr(1e-3):0.009922615985014887 - train/time(s):52.74087166786194
+Epoch 1/1:  10%|█         | 58/563 [51:16<7:25:22, 52.92s/it]step:59 - train/loss:0.31158554553985596 - train/lr(1e-3):0.00991738555840356 - train/time(s):52.97752141952515
+Epoch 1/1:  10%|█         | 59/563 [52:09<7:24:39, 52.94s/it]step:60 - train/loss:0.2992626428604126 - train/lr(1e-3):0.009911985571094564 - train/time(s):53.032933473587036
+Epoch 1/1:  11%|█         | 60/563 [53:02<7:24:02, 52.97s/it]step:61 - train/loss:0.30109548568725586 - train/lr(1e-3):0.00990641620928961 - train/time(s):52.83028531074524
+Epoch 1/1:  11%|█         | 61/563 [53:55<7:22:49, 52.93s/it]step:62 - train/loss:0.2950970232486725 - train/lr(1e-3):0.009900677665030763 - train/time(s):53.08515000343323
+Epoch 1/1:  11%|█         | 62/563 [54:48<7:22:20, 52.98s/it]step:63 - train/loss:0.29077649116516113 - train/lr(1e-3):0.009894770136193814 - train/time(s):53.311681270599365
+Epoch 1/1:  11%|█         | 63/563 [55:41<7:22:18, 53.08s/it]step:64 - train/loss:0.32418036460876465 - train/lr(1e-3):0.009888693826481467 - train/time(s):53.12119483947754
+Epoch 1/1:  11%|█▏        | 64/563 [56:34<7:21:33, 53.09s/it]step:65 - train/loss:0.30117082595825195 - train/lr(1e-3):0.0098824489454163 - train/time(s):53.215713024139404
+Epoch 1/1:  12%|█▏        | 65/563 [57:27<7:20:59, 53.13s/it]step:66 - train/loss:0.2876310348510742 - train/lr(1e-3):0.009876035708333552 - train/time(s):52.87561058998108
+Epoch 1/1:  12%|█▏        | 66/563 [58:20<7:19:28, 53.06s/it]step:67 - train/loss:0.29142123460769653 - train/lr(1e-3):0.00986945433637369 - train/time(s):53.026031255722046
+Epoch 1/1:  12%|█▏        | 67/563 [59:13<7:18:31, 53.05s/it]step:68 - train/loss:0.2960979640483856 - train/lr(1e-3):0.009862705056474795 - train/time(s):53.01740479469299
+Epoch 1/1:  12%|█▏        | 68/563 [1:00:06<7:17:35, 53.04s/it]step:69 - train/loss:0.30431872606277466 - train/lr(1e-3):0.009855788101364723 - train/time(s):53.309454917907715
+Epoch 1/1:  12%|█▏        | 69/563 [1:01:00<7:17:22, 53.12s/it]step:70 - train/loss:0.3035583794116974 - train/lr(1e-3):0.009848703709553088 - train/time(s):52.82987856864929
+Saving checkpoint to: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_70
+/root/pb-venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+/root/pb-venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[2026-10-10 13:22:45,565][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved model to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_70/model_world_size_2_rank_0.pt
+[2026-10-10 13:22:45,895][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 1] Saved model to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_70/model_world_size_2_rank_1.pt
+[2026-10-10 13:22:52,605][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved optim to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_70/optim_world_size_2_rank_0.pt
+[2026-10-10 13:22:52,607][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved extra_state to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_70/extra_state_world_size_2_rank_0.pt
+[2026-10-10 13:22:52,678][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved model config and tokenizer class to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_70/huggingface
+/root/pb-venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[2026-10-10 13:22:53,361][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 1] Saved optim to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_70/optim_world_size_2_rank_1.pt
+[2026-10-10 13:22:53,362][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 1] Saved extra_state to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_70/extra_state_world_size_2_rank_1.pt
+/root/pb-venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[2026-10-10 13:23:01,304][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved hf_model to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_70/huggingface
+Saved dataloader state to: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_70/data.pt
+Updated checkpoint tracker: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/latest_checkpointed_iteration.txt
+Epoch 1/1:  12%|█▏        | 70/563 [1:02:16<8:12:52, 59.99s/it]step:71 - train/loss:0.28203946352005005 - train/lr(1e-3):0.009841452125323042 - train/time(s):53.66111445426941
+Epoch 1/1:  13%|█▎        | 71/563 [1:03:09<7:56:20, 58.09s/it]step:72 - train/loss:0.2816017270088196 - train/lr(1e-3):0.00983403359872283 - train/time(s):52.78855347633362
+Epoch 1/1:  13%|█▎        | 72/563 [1:04:02<7:42:21, 56.50s/it]step:73 - train/loss:0.3009929060935974 - train/lr(1e-3):0.009826448385557207 - train/time(s):52.87635517120361
+Epoch 1/1:  13%|█▎        | 73/563 [1:04:55<7:32:33, 55.41s/it]step:74 - train/loss:0.2877088487148285 - train/lr(1e-3):0.009818696747378572 - train/time(s):53.02260661125183
+Epoch 1/1:  13%|█▎        | 74/563 [1:05:48<7:25:47, 54.70s/it]step:75 - train/loss:0.2965754568576813 - train/lr(1e-3):0.009810778951477986 - train/time(s):52.91488552093506
+Epoch 1/1:  13%|█▎        | 75/563 [1:06:41<7:20:32, 54.16s/it]step:76 - train/loss:0.293440043926239 - train/lr(1e-3):0.009802695270875933 - train/time(s):52.750534772872925
+Epoch 1/1:  13%|█▎        | 76/563 [1:07:34<7:16:12, 53.74s/it]step:77 - train/loss:0.2856726050376892 - train/lr(1e-3):0.009794445984312915 - train/time(s):52.998913526535034
+Epoch 1/1:  14%|█▎        | 77/563 [1:08:27<7:13:30, 53.52s/it]step:78 - train/loss:0.29816335439682007 - train/lr(1e-3):0.009786031376239842 - train/time(s):52.74424648284912
+Epoch 1/1:  14%|█▍        | 78/563 [1:09:19<7:10:44, 53.29s/it]step:79 - train/loss:0.2787572741508484 - train/lr(1e-3):0.009777451736808216 - train/time(s):53.22359538078308
+Epoch 1/1:  14%|█▍        | 79/563 [1:10:13<7:09:43, 53.27s/it]step:80 - train/loss:0.30070340633392334 - train/lr(1e-3):0.009768707361860135 - train/time(s):52.93646430969238
+Epoch 1/1:  14%|█▍        | 80/563 [1:11:06<7:08:01, 53.17s/it]step:81 - train/loss:0.2813877761363983 - train/lr(1e-3):0.009759798552918081 - train/time(s):52.868403673172
+Epoch 1/1:  14%|█▍        | 81/563 [1:11:58<7:06:25, 53.08s/it]step:82 - train/loss:0.28442537784576416 - train/lr(1e-3):0.009750725617174534 - train/time(s):53.10609030723572
+Epoch 1/1:  15%|█▍        | 82/563 [1:12:52<7:05:36, 53.09s/it]step:83 - train/loss:0.2929908037185669 - train/lr(1e-3):0.009741488867481376 - train/time(s):52.97528338432312
+Epoch 1/1:  15%|█▍        | 83/563 [1:13:45<7:04:27, 53.06s/it]step:84 - train/loss:0.29346948862075806 - train/lr(1e-3):0.0097320886223391 - train/time(s):52.90380263328552
+Epoch 1/1:  15%|█▍        | 84/563 [1:14:37<7:03:12, 53.01s/it]step:85 - train/loss:0.32172444462776184 - train/lr(1e-3):0.009722525205885823 - train/time(s):53.04284620285034
+Epoch 1/1:  15%|█▌        | 85/563 [1:15:31<7:02:24, 53.02s/it]step:86 - train/loss:0.29085493087768555 - train/lr(1e-3):0.009712798947886129 - train/time(s):52.88722324371338
+Epoch 1/1:  15%|█▌        | 86/563 [1:16:23<7:01:13, 52.98s/it]step:87 - train/loss:0.2938627004623413 - train/lr(1e-3):0.009702910183719672 - train/time(s):52.759373903274536
+Epoch 1/1:  15%|█▌        | 87/563 [1:17:16<6:59:48, 52.92s/it]step:88 - train/loss:0.28908151388168335 - train/lr(1e-3):0.009692859254369631 - train/time(s):52.92239999771118
+Epoch 1/1:  16%|█▌        | 88/563 [1:18:09<6:58:56, 52.92s/it]step:89 - train/loss:0.28058815002441406 - train/lr(1e-3):0.009682646506410944 - train/time(s):52.56969928741455
+Epoch 1/1:  16%|█▌        | 89/563 [1:19:02<6:57:14, 52.82s/it]step:90 - train/loss:0.29938265681266785 - train/lr(1e-3):0.009672272291998355 - train/time(s):52.64769530296326
+Epoch 1/1:  16%|█▌        | 90/563 [1:19:54<6:55:58, 52.77s/it]step:91 - train/loss:0.2950705289840698 - train/lr(1e-3):0.009661736968854282 - train/time(s):52.90417957305908
+Epoch 1/1:  16%|█▌        | 91/563 [1:20:47<6:55:25, 52.81s/it]step:92 - train/loss:0.31425079703330994 - train/lr(1e-3):0.009651040900256471 - train/time(s):52.841583251953125
+Epoch 1/1:  16%|█▋        | 92/563 [1:21:40<6:54:38, 52.82s/it]step:93 - train/loss:0.29174238443374634 - train/lr(1e-3):0.009640184455025472 - train/time(s):52.946502923965454
+Epoch 1/1:  17%|█▋        | 93/563 [1:22:33<6:54:03, 52.86s/it]step:94 - train/loss:0.29369133710861206 - train/lr(1e-3):0.009629168007511924 - train/time(s):52.66287970542908
+Epoch 1/1:  17%|█▋        | 94/563 [1:23:26<6:52:44, 52.80s/it]step:95 - train/loss:0.3127717673778534 - train/lr(1e-3):0.009617991937583647 - train/time(s):53.12664771080017
+Epoch 1/1:  17%|█▋        | 95/563 [1:24:19<6:52:37, 52.90s/it]step:96 - train/loss:0.31429213285446167 - train/lr(1e-3):0.009606656630612541 - train/time(s):52.758848667144775
+Epoch 1/1:  17%|█▋        | 96/563 [1:25:12<6:51:25, 52.86s/it]step:97 - train/loss:0.3096860945224762 - train/lr(1e-3):0.009595162477461297 - train/time(s):52.819106101989746
+Epoch 1/1:  17%|█▋        | 97/563 [1:26:04<6:50:27, 52.85s/it]step:98 - train/loss:0.30748462677001953 - train/lr(1e-3):0.009583509874469924 - train/time(s):52.808119773864746
+Epoch 1/1:  17%|█▋        | 98/563 [1:26:57<6:49:29, 52.84s/it]step:99 - train/loss:0.2939532995223999 - train/lr(1e-3):0.009571699223442075 - train/time(s):52.65519094467163
+Epoch 1/1:  18%|█▊        | 99/563 [1:27:50<6:48:11, 52.78s/it]step:100 - train/loss:0.3000120520591736 - train/lr(1e-3):0.0095597309316312 - train/time(s):53.096561670303345
+Epoch 1/1:  18%|█▊        | 100/563 [1:28:43<6:48:02, 52.88s/it]step:101 - train/loss:0.2962196171283722 - train/lr(1e-3):0.009547605411726499 - train/time(s):52.88247632980347
+Epoch 1/1:  18%|█▊        | 101/563 [1:29:36<6:47:11, 52.88s/it]step:102 - train/loss:0.290854811668396 - train/lr(1e-3):0.009535323081838692 - train/time(s):53.067063331604004
+Epoch 1/1:  18%|█▊        | 102/563 [1:30:29<6:46:44, 52.94s/it]step:103 - train/loss:0.2895119786262512 - train/lr(1e-3):0.009522884365485599 - train/time(s):52.834808111190796
+Epoch 1/1:  18%|█▊        | 103/563 [1:31:22<6:45:37, 52.91s/it]step:104 - train/loss:0.30102357268333435 - train/lr(1e-3):0.009510289691577543 - train/time(s):52.698808431625366
+Epoch 1/1:  18%|█▊        | 104/563 [1:32:14<6:44:16, 52.85s/it]step:105 - train/loss:0.2935791611671448 - train/lr(1e-3):0.00949753949440256 - train/time(s):52.73581504821777
+Epoch 1/1:  19%|█▊        | 105/563 [1:33:07<6:43:08, 52.81s/it]step:106 - train/loss:0.2890791893005371 - train/lr(1e-3):0.009484634213611412 - train/time(s):53.04969668388367
+Epoch 1/1:  19%|█▉        | 106/563 [1:34:00<6:42:48, 52.89s/it]step:107 - train/loss:0.3047042489051819 - train/lr(1e-3):0.009471574294202438 - train/time(s):52.95470309257507
+Epoch 1/1:  19%|█▉        | 107/563 [1:34:53<6:42:05, 52.91s/it]step:108 - train/loss:0.3016566038131714 - train/lr(1e-3):0.009458360186506212 - train/time(s):52.73729491233826
+Epoch 1/1:  19%|█▉        | 108/563 [1:35:46<6:40:50, 52.86s/it]step:109 - train/loss:0.3125578761100769 - train/lr(1e-3):0.009444992346170007 - train/time(s):52.99033308029175
+Epoch 1/1:  19%|█▉        | 109/563 [1:36:39<6:40:16, 52.90s/it]step:110 - train/loss:0.3139567971229553 - train/lr(1e-3):0.009431471234142088 - train/time(s):52.81460905075073
+Epoch 1/1:  20%|█▉        | 110/563 [1:37:32<6:39:12, 52.88s/it]step:111 - train/loss:0.2924155592918396 - train/lr(1e-3):0.00941779731665581 - train/time(s):52.7803909778595
+Epoch 1/1:  20%|█▉        | 111/563 [1:38:25<6:38:07, 52.85s/it]step:112 - train/loss:0.3024306297302246 - train/lr(1e-3):0.009403971065213556 - train/time(s):52.898685932159424
+Epoch 1/1:  20%|█▉        | 112/563 [1:39:17<6:37:22, 52.87s/it]step:113 - train/loss:0.296520859003067 - train/lr(1e-3):0.009389992956570463 - train/time(s):52.8536593914032
+Epoch 1/1:  20%|██        | 113/563 [1:40:10<6:36:28, 52.86s/it]step:114 - train/loss:0.302606463432312 - train/lr(1e-3):0.009375863472717995 - train/time(s):53.081995487213135
+Epoch 1/1:  20%|██        | 114/563 [1:41:03<6:36:05, 52.93s/it]step:115 - train/loss:0.3072092831134796 - train/lr(1e-3):0.009361583100867312 - train/time(s):53.03557085990906
+Epoch 1/1:  20%|██        | 115/563 [1:41:56<6:35:27, 52.96s/it]step:116 - train/loss:0.30240142345428467 - train/lr(1e-3):0.009347152333432484 - train/time(s):52.65750551223755
+Epoch 1/1:  21%|██        | 116/563 [1:42:49<6:33:54, 52.87s/it]step:117 - train/loss:0.2948039472103119 - train/lr(1e-3):0.0093325716680135 - train/time(s):52.92524027824402
+Epoch 1/1:  21%|██        | 117/563 [1:43:42<6:33:09, 52.89s/it]step:118 - train/loss:0.2972220182418823 - train/lr(1e-3):0.009317841607379106 - train/time(s):52.74591064453125
+Epoch 1/1:  21%|██        | 118/563 [1:44:35<6:31:57, 52.85s/it]step:119 - train/loss:0.294247031211853 - train/lr(1e-3):0.009302962659449486 - train/time(s):53.01993155479431
+Epoch 1/1:  21%|██        | 119/563 [1:45:28<6:31:27, 52.90s/it]step:120 - train/loss:0.3003332316875458 - train/lr(1e-3):0.009287935337278733 - train/time(s):52.75816607475281
+Epoch 1/1:  21%|██▏       | 120/563 [1:46:21<6:30:16, 52.86s/it]step:121 - train/loss:0.28382277488708496 - train/lr(1e-3):0.009272760159037163 - train/time(s):52.899473667144775
+Epoch 1/1:  21%|██▏       | 121/563 [1:47:14<6:29:29, 52.87s/it]step:122 - train/loss:0.30019545555114746 - train/lr(1e-3):0.009257437647993451 - train/time(s):52.76238203048706
+Epoch 1/1:  22%|██▏       | 122/563 [1:48:06<6:28:22, 52.84s/it]step:123 - train/loss:0.30274075269699097 - train/lr(1e-3):0.009241968332496577 - train/time(s):53.200138330459595
+Epoch 1/1:  22%|██▏       | 123/563 [1:48:59<6:28:17, 52.95s/it]step:124 - train/loss:0.28967517614364624 - train/lr(1e-3):0.009226352745957615 - train/time(s):52.7072696685791
+Epoch 1/1:  22%|██▏       | 124/563 [1:49:52<6:26:53, 52.88s/it]step:125 - train/loss:0.2904509902000427 - train/lr(1e-3):0.009210591426831352 - train/time(s):53.025535345077515
+Epoch 1/1:  22%|██▏       | 125/563 [1:50:45<6:26:20, 52.92s/it]step:126 - train/loss:0.302318274974823 - train/lr(1e-3):0.009194684918597694 - train/time(s):52.901376247406006
+Epoch 1/1:  22%|██▏       | 126/563 [1:51:38<6:25:25, 52.92s/it]step:127 - train/loss:0.31083858013153076 - train/lr(1e-3):0.009178633769742945 - train/time(s):52.739911794662476
+Epoch 1/1:  23%|██▎       | 127/563 [1:52:31<6:24:09, 52.87s/it]step:128 - train/loss:0.2902304232120514 - train/lr(1e-3):0.00916243853374089 - train/time(s):52.931081771850586
+Epoch 1/1:  23%|██▎       | 128/563 [1:53:24<6:23:25, 52.89s/it]step:129 - train/loss:0.29014188051223755 - train/lr(1e-3):0.009146099769033715 - train/time(s):52.81172585487366
+Epoch 1/1:  23%|██▎       | 129/563 [1:54:17<6:22:23, 52.87s/it]step:130 - train/loss:0.28131723403930664 - train/lr(1e-3):0.009129618039012737 - train/time(s):52.99014496803284
+Epoch 1/1:  23%|██▎       | 130/563 [1:55:10<6:21:47, 52.90s/it]step:131 - train/loss:0.2990358769893646 - train/lr(1e-3):0.009112993911998983 - train/time(s):53.17299246788025
+Epoch 1/1:  23%|██▎       | 131/563 [1:56:03<6:21:29, 52.99s/it]step:132 - train/loss:0.293626993894577 - train/lr(1e-3):0.009096227961223613 - train/time(s):53.05149984359741
+Epoch 1/1:  23%|██▎       | 132/563 [1:56:56<6:20:45, 53.01s/it]step:133 - train/loss:0.28780996799468994 - train/lr(1e-3):0.00907932076480812 - train/time(s):52.8831262588501
+Epoch 1/1:  24%|██▎       | 133/563 [1:57:49<6:19:37, 52.97s/it]step:134 - train/loss:0.2875613570213318 - train/lr(1e-3):0.00906227290574442 - train/time(s):52.808758020401
+Epoch 1/1:  24%|██▍       | 134/563 [1:58:42<6:18:24, 52.92s/it]step:135 - train/loss:0.29187506437301636 - train/lr(1e-3):0.009045084971874739 - train/time(s):52.604018449783325
+Epoch 1/1:  24%|██▍       | 135/563 [1:59:34<6:16:50, 52.83s/it]step:136 - train/loss:0.29801350831985474 - train/lr(1e-3):0.009027757555871345 - train/time(s):52.75515103340149
+Epoch 1/1:  24%|██▍       | 136/563 [2:00:27<6:15:49, 52.81s/it]step:137 - train/loss:0.27664345502853394 - train/lr(1e-3):0.009010291255216117 - train/time(s):52.97492814064026
+Epoch 1/1:  24%|██▍       | 137/563 [2:01:20<6:15:18, 52.86s/it]step:138 - train/loss:0.30835574865341187 - train/lr(1e-3):0.00899268667217993 - train/time(s):52.55630970001221
+Epoch 1/1:  25%|██▍       | 138/563 [2:02:12<6:13:47, 52.77s/it]step:139 - train/loss:0.3044385612010956 - train/lr(1e-3):0.008974944413801906 - train/time(s):52.909196615219116
+Epoch 1/1:  25%|██▍       | 139/563 [2:03:05<6:13:12, 52.81s/it]step:140 - train/loss:0.2908417582511902 - train/lr(1e-3):0.008957065091868461 - train/time(s):53.0137722492218
+Saving checkpoint to: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_140
+Checkpoint manager remove previous save local path: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_70
+[2026-10-10 14:24:52,741][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 1] Saved model to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_140/model_world_size_2_rank_1.pt
+[2026-10-10 14:24:53,814][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved model to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_140/model_world_size_2_rank_0.pt
+[2026-10-10 14:25:00,879][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved optim to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_140/optim_world_size_2_rank_0.pt
+[2026-10-10 14:25:00,881][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved extra_state to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_140/extra_state_world_size_2_rank_0.pt
+[2026-10-10 14:25:00,955][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved model config and tokenizer class to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_140/huggingface
+/root/pb-venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[2026-10-10 14:25:01,260][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 1] Saved optim to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_140/optim_world_size_2_rank_1.pt
+[2026-10-10 14:25:01,261][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 1] Saved extra_state to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_140/extra_state_world_size_2_rank_1.pt
+/root/pb-venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+Flash Attention 2 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2ForCausalLM is bfloat16. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", dtype=torch.float16)`
+Flash Attention 2 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2Model is bfloat16. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", dtype=torch.float16)`
+[2026-10-10 14:25:09,167][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved hf_model to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_140/huggingface
+Saved dataloader state to: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_140/data.pt
+Updated checkpoint tracker: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/latest_checkpointed_iteration.txt
+Epoch 1/1:  25%|██▍       | 140/563 [2:04:23<7:05:51, 60.41s/it]step:141 - train/loss:0.2958373427391052 - train/lr(1e-3):0.008939049322892223 - train/time(s):53.479430198669434
+Epoch 1/1:  25%|██▌       | 141/563 [2:05:17<6:50:14, 58.33s/it]step:142 - train/loss:0.2894083261489868 - train/lr(1e-3):0.008920897728090777 - train/time(s):52.59670114517212
+Epoch 1/1:  25%|██▌       | 142/563 [2:06:10<6:37:12, 56.61s/it]step:143 - train/loss:0.2772599458694458 - train/lr(1e-3):0.008902610933365229 - train/time(s):52.61442422866821
+Epoch 1/1:  25%|██▌       | 143/563 [2:07:02<6:27:53, 55.41s/it]step:144 - train/loss:0.3211384117603302 - train/lr(1e-3):0.00888418956927864 - train/time(s):52.842747926712036
+Epoch 1/1:  26%|██▌       | 144/563 [2:07:55<6:21:35, 54.64s/it]step:145 - train/loss:0.29271456599235535 - train/lr(1e-3):0.008865634271034269 - train/time(s):52.619199991226196
+Epoch 1/1:  26%|██▌       | 145/563 [2:08:48<6:16:27, 54.04s/it]step:146 - train/loss:0.27601170539855957 - train/lr(1e-3):0.008846945678453679 - train/time(s):52.33670473098755
+Epoch 1/1:  26%|██▌       | 146/563 [2:09:40<6:12:01, 53.53s/it]step:147 - train/loss:0.3010459840297699 - train/lr(1e-3):0.008828124435954673 - train/time(s):52.86639046669006
+Epoch 1/1:  26%|██▌       | 147/563 [2:10:33<6:09:45, 53.33s/it]step:148 - train/loss:0.3094286024570465 - train/lr(1e-3):0.008809171192529074 - train/time(s):52.59760141372681
+Epoch 1/1:  26%|██▋       | 148/563 [2:11:25<6:07:21, 53.11s/it]step:149 - train/loss:0.28452181816101074 - train/lr(1e-3):0.00879008660172034 - train/time(s):53.08323311805725
+Epoch 1/1:  26%|██▋       | 149/563 [2:12:19<6:06:25, 53.11s/it]step:150 - train/loss:0.2840406894683838 - train/lr(1e-3):0.00877087132160104 - train/time(s):52.64600419998169
+Epoch 1/1:  27%|██▋       | 150/563 [2:13:11<6:04:35, 52.97s/it]step:151 - train/loss:0.30476003885269165 - train/lr(1e-3):0.008751526014750153 - train/time(s):52.806156396865845
+Epoch 1/1:  27%|██▋       | 151/563 [2:14:04<6:03:23, 52.92s/it]step:152 - train/loss:0.2989017963409424 - train/lr(1e-3):0.008732051348230224 - train/time(s):53.0413019657135
+Epoch 1/1:  27%|██▋       | 152/563 [2:14:57<6:02:45, 52.96s/it]step:153 - train/loss:0.28328850865364075 - train/lr(1e-3):0.008712447993564361 - train/time(s):53.364535093307495
+Epoch 1/1:  27%|██▋       | 153/563 [2:15:50<6:02:43, 53.08s/it]step:154 - train/loss:0.29916998744010925 - train/lr(1e-3):0.008692716626713086 - train/time(s):52.74256086349487
+Epoch 1/1:  27%|██▋       | 154/563 [2:16:43<6:01:09, 52.98s/it]step:155 - train/loss:0.2928067445755005 - train/lr(1e-3):0.008672857928051012 - train/time(s):52.99016332626343
+Epoch 1/1:  28%|██▊       | 155/563 [2:17:36<6:00:18, 52.99s/it]step:156 - train/loss:0.2858714759349823 - train/lr(1e-3):0.008652872582343409 - train/time(s):52.77444553375244
+Epoch 1/1:  28%|██▊       | 156/563 [2:18:29<5:58:59, 52.92s/it]step:157 - train/loss:0.2876029908657074 - train/lr(1e-3):0.008632761278722558 - train/time(s):53.306532859802246
+Epoch 1/1:  28%|██▊       | 157/563 [2:19:22<5:58:54, 53.04s/it]step:158 - train/loss:0.30290037393569946 - train/lr(1e-3):0.008612524710664012 - train/time(s):52.907527685165405
+Epoch 1/1:  28%|██▊       | 158/563 [2:20:15<5:57:45, 53.00s/it]step:159 - train/loss:0.2898560166358948 - train/lr(1e-3):0.008592163575962682 - train/time(s):52.67313528060913
+Epoch 1/1:  28%|██▊       | 159/563 [2:21:08<5:56:13, 52.90s/it]step:160 - train/loss:0.28843167424201965 - train/lr(1e-3):0.008571678576708767 - train/time(s):53.037858724594116
+Epoch 1/1:  28%|██▊       | 160/563 [2:22:01<5:55:37, 52.95s/it]step:161 - train/loss:0.28948771953582764 - train/lr(1e-3):0.008551070419263545 - train/time(s):53.03798866271973
+Epoch 1/1:  29%|██▊       | 161/563 [2:22:54<5:54:55, 52.97s/it]step:162 - train/loss:0.3039400577545166 - train/lr(1e-3):0.008530339814235028 - train/time(s):52.926979541778564
+Epoch 1/1:  29%|██▉       | 162/563 [2:23:47<5:53:57, 52.96s/it]step:163 - train/loss:0.30238085985183716 - train/lr(1e-3):0.008509487476453442 - train/time(s):52.78333902359009
+Epoch 1/1:  29%|██▉       | 163/563 [2:24:40<5:52:43, 52.91s/it]step:164 - train/loss:0.3071223497390747 - train/lr(1e-3):0.008488514124946594 - train/time(s):52.50104212760925
+Epoch 1/1:  29%|██▉       | 164/563 [2:25:32<5:51:02, 52.79s/it]step:165 - train/loss:0.3001750707626343 - train/lr(1e-3):0.00846742048291507 - train/time(s):53.10074067115784
+Epoch 1/1:  29%|██▉       | 165/563 [2:26:25<5:50:47, 52.88s/it]step:166 - train/loss:0.29192909598350525 - train/lr(1e-3):0.008446207277707297 - train/time(s):52.6598436832428
+Epoch 1/1:  29%|██▉       | 166/563 [2:27:18<5:49:28, 52.82s/it]step:167 - train/loss:0.2771875262260437 - train/lr(1e-3):0.008424875240794468 - train/time(s):53.12203574180603
+Epoch 1/1:  30%|██▉       | 167/563 [2:28:11<5:49:12, 52.91s/it]step:168 - train/loss:0.30490636825561523 - train/lr(1e-3):0.008403425107745315 - train/time(s):52.97343182563782
+Epoch 1/1:  30%|██▉       | 168/563 [2:29:04<5:48:27, 52.93s/it]step:169 - train/loss:0.29764169454574585 - train/lr(1e-3):0.008381857618200747 - train/time(s):53.04042458534241
+Epoch 1/1:  30%|███       | 169/563 [2:29:57<5:47:47, 52.96s/it]step:170 - train/loss:0.31035953760147095 - train/lr(1e-3):0.008360173515848345 - train/time(s):53.02472543716431
+Epoch 1/1:  30%|███       | 170/563 [2:30:50<5:47:02, 52.98s/it]step:171 - train/loss:0.28692561388015747 - train/lr(1e-3):0.00833837354839672 - train/time(s):52.70813012123108
+Epoch 1/1:  30%|███       | 171/563 [2:31:43<5:45:37, 52.90s/it]step:172 - train/loss:0.30335813760757446 - train/lr(1e-3):0.00831645846754973 - train/time(s):52.98129963874817
+Epoch 1/1:  31%|███       | 172/563 [2:32:36<5:44:54, 52.93s/it]step:173 - train/loss:0.29628467559814453 - train/lr(1e-3):0.008294429028980555 - train/time(s):52.63656258583069
+Epoch 1/1:  31%|███       | 173/563 [2:33:28<5:43:27, 52.84s/it]step:174 - train/loss:0.30459290742874146 - train/lr(1e-3):0.008272285992305653 - train/time(s):52.8668167591095
+Epoch 1/1:  31%|███       | 174/563 [2:34:21<5:42:38, 52.85s/it]step:175 - train/loss:0.3125389814376831 - train/lr(1e-3):0.008250030121058547 - train/time(s):53.047539710998535
+Epoch 1/1:  31%|███       | 175/563 [2:35:14<5:42:09, 52.91s/it]step:176 - train/loss:0.29429617524147034 - train/lr(1e-3):0.008227662182663518 - train/time(s):53.288015842437744
+Epoch 1/1:  31%|███▏      | 176/563 [2:36:08<5:42:00, 53.03s/it]step:177 - train/loss:0.2988777160644531 - train/lr(1e-3):0.008205182948409126 - train/time(s):53.18791222572327
+Epoch 1/1:  31%|███▏      | 177/563 [2:37:01<5:41:27, 53.08s/it]step:178 - train/loss:0.2875497341156006 - train/lr(1e-3):0.008182593193421624 - train/time(s):52.773686170578
+Epoch 1/1:  32%|███▏      | 178/563 [2:37:54<5:39:59, 52.99s/it]step:179 - train/loss:0.28969883918762207 - train/lr(1e-3):0.008159893696638231 - train/time(s):52.88615012168884
+Epoch 1/1:  32%|███▏      | 179/563 [2:38:47<5:38:55, 52.96s/it]step:180 - train/loss:0.29804474115371704 - train/lr(1e-3):0.008137085240780263 - train/time(s):52.47932195663452
+Epoch 1/1:  32%|███▏      | 180/563 [2:39:39<5:37:08, 52.81s/it]step:181 - train/loss:0.27982234954833984 - train/lr(1e-3):0.008114168612326153 - train/time(s):53.241355895996094
+Epoch 1/1:  32%|███▏      | 181/563 [2:40:32<5:37:04, 52.94s/it]step:182 - train/loss:0.28621184825897217 - train/lr(1e-3):0.00809114460148433 - train/time(s):52.9793484210968
+Epoch 1/1:  32%|███▏      | 182/563 [2:41:25<5:36:16, 52.96s/it]step:183 - train/loss:0.2944473624229431 - train/lr(1e-3):0.008068014002165969 - train/time(s):52.746057987213135
+Epoch 1/1:  33%|███▎      | 183/563 [2:42:18<5:34:59, 52.89s/it]step:184 - train/loss:0.3034006357192993 - train/lr(1e-3):0.008044777611957613 - train/time(s):52.963062047958374
+Epoch 1/1:  33%|███▎      | 184/563 [2:43:11<5:34:15, 52.92s/it]step:185 - train/loss:0.3068125247955322 - train/lr(1e-3):0.008021436232093676 - train/time(s):53.19428634643555
+Epoch 1/1:  33%|███▎      | 185/563 [2:44:04<5:33:54, 53.00s/it]step:186 - train/loss:0.28757864236831665 - train/lr(1e-3):0.007997990667428812 - train/time(s):52.6677827835083
+Epoch 1/1:  33%|███▎      | 186/563 [2:44:57<5:32:24, 52.90s/it]step:187 - train/loss:0.28269022703170776 - train/lr(1e-3):0.007974441726410163 - train/time(s):52.87464618682861
+Epoch 1/1:  33%|███▎      | 187/563 [2:45:50<5:31:28, 52.90s/it]step:188 - train/loss:0.2967054843902588 - train/lr(1e-3):0.007950790221049485 - train/time(s):52.72184896469116
+Epoch 1/1:  33%|███▎      | 188/563 [2:46:42<5:30:16, 52.84s/it]step:189 - train/loss:0.2904285192489624 - train/lr(1e-3):0.007927036966895139 - train/time(s):52.79266834259033
+Epoch 1/1:  34%|███▎      | 189/563 [2:47:35<5:29:18, 52.83s/it]step:190 - train/loss:0.31101399660110474 - train/lr(1e-3):0.00790318278300398 - train/time(s):53.06508135795593
+Epoch 1/1:  34%|███▎      | 190/563 [2:48:28<5:28:52, 52.90s/it]step:191 - train/loss:0.31379252672195435 - train/lr(1e-3):0.007879228491913111 - train/time(s):52.624032974243164
+Epoch 1/1:  34%|███▍      | 191/563 [2:49:21<5:27:28, 52.82s/it]step:192 - train/loss:0.30068594217300415 - train/lr(1e-3):0.007855174919611517 - train/time(s):52.96371579170227
+Epoch 1/1:  34%|███▍      | 192/563 [2:50:14<5:26:52, 52.86s/it]step:193 - train/loss:0.28756648302078247 - train/lr(1e-3):0.007831022895511585 - train/time(s):52.95582962036133
+Epoch 1/1:  34%|███▍      | 193/563 [2:51:07<5:26:10, 52.89s/it]step:194 - train/loss:0.28976914286613464 - train/lr(1e-3):0.00780677325242051 - train/time(s):52.995622873306274
+Epoch 1/1:  34%|███▍      | 194/563 [2:52:00<5:25:29, 52.92s/it]step:195 - train/loss:0.2956703305244446 - train/lr(1e-3):0.007782426826511564 - train/time(s):52.75095534324646
+Epoch 1/1:  35%|███▍      | 195/563 [2:52:53<5:24:17, 52.87s/it]step:196 - train/loss:0.29274681210517883 - train/lr(1e-3):0.007757984457295284 - train/time(s):53.14396023750305
+Epoch 1/1:  35%|███▍      | 196/563 [2:53:46<5:23:54, 52.96s/it]step:197 - train/loss:0.27921199798583984 - train/lr(1e-3):0.007733446987590505 - train/time(s):52.85523295402527
+Epoch 1/1:  35%|███▍      | 197/563 [2:54:39<5:22:51, 52.93s/it]step:198 - train/loss:0.29707071185112 - train/lr(1e-3):0.007708815263495306 - train/time(s):52.73419904708862
+Epoch 1/1:  35%|███▌      | 198/563 [2:55:31<5:21:37, 52.87s/it]step:199 - train/loss:0.27813810110092163 - train/lr(1e-3):0.007684090134357839 - train/time(s):53.08981966972351
+Epoch 1/1:  35%|███▌      | 199/563 [2:56:24<5:21:09, 52.94s/it]step:200 - train/loss:0.28293243050575256 - train/lr(1e-3):0.007659272452747032 - train/time(s):52.392295837402344
+Epoch 1/1:  36%|███▌      | 200/563 [2:57:17<5:19:17, 52.78s/it]step:201 - train/loss:0.29800379276275635 - train/lr(1e-3):0.007634363074423199 - train/time(s):53.12636423110962
+Epoch 1/1:  36%|███▌      | 201/563 [2:58:10<5:19:03, 52.88s/it]step:202 - train/loss:0.2981840670108795 - train/lr(1e-3):0.007609362858308531 - train/time(s):52.573082447052
+Epoch 1/1:  36%|███▌      | 202/563 [2:59:03<5:17:37, 52.79s/it]step:203 - train/loss:0.2876289188861847 - train/lr(1e-3):0.00758427266645747 - train/time(s):52.89484739303589
+Epoch 1/1:  36%|███▌      | 203/563 [2:59:55<5:16:56, 52.82s/it]step:204 - train/loss:0.30319058895111084 - train/lr(1e-3):0.0075590933640270015 - train/time(s):53.107269048690796
+Epoch 1/1:  36%|███▌      | 204/563 [3:00:49<5:16:34, 52.91s/it]step:205 - train/loss:0.2830745577812195 - train/lr(1e-3):0.007533825819246801 - train/time(s):53.05785918235779
+Epoch 1/1:  36%|███▋      | 205/563 [3:01:42<5:15:57, 52.96s/it]step:206 - train/loss:0.3033362627029419 - train/lr(1e-3):0.007508470903389311 - train/time(s):52.80391049385071
+Epoch 1/1:  37%|███▋      | 206/563 [3:02:34<5:14:49, 52.91s/it]step:207 - train/loss:0.28254497051239014 - train/lr(1e-3):0.007483029490739691 - train/time(s):52.706275939941406
+Epoch 1/1:  37%|███▋      | 207/563 [3:03:27<5:13:34, 52.85s/it]step:208 - train/loss:0.29703015089035034 - train/lr(1e-3):0.007457502458565673 - train/time(s):52.956459760665894
+Epoch 1/1:  37%|███▋      | 208/563 [3:04:20<5:12:53, 52.88s/it]step:209 - train/loss:0.2876407504081726 - train/lr(1e-3):0.007431890687087312 - train/time(s):53.227089166641235
+Epoch 1/1:  37%|███▋      | 209/563 [3:05:13<5:12:37, 52.99s/it]step:210 - train/loss:0.3087570071220398 - train/lr(1e-3):0.007406195059446637 - train/time(s):52.906800985336304
+Saving checkpoint to: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_210
+Checkpoint manager remove previous save local path: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_140
+[2026-10-10 15:27:00,121][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 1] Saved model to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_210/model_world_size_2_rank_1.pt
+[2026-10-10 15:27:00,296][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved model to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_210/model_world_size_2_rank_0.pt
+[2026-10-10 15:27:07,608][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved optim to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_210/optim_world_size_2_rank_0.pt
+[2026-10-10 15:27:07,609][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved extra_state to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_210/extra_state_world_size_2_rank_0.pt
+[2026-10-10 15:27:07,689][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved model config and tokenizer class to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_210/huggingface
+/root/pb-venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[2026-10-10 15:27:08,480][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 1] Saved optim to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_210/optim_world_size_2_rank_1.pt
+[2026-10-10 15:27:08,481][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 1] Saved extra_state to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_210/extra_state_world_size_2_rank_1.pt
+/root/pb-venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[2026-10-10 15:27:16,013][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved hf_model to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_210/huggingface
+Saved dataloader state to: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_210/data.pt
+Updated checkpoint tracker: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/latest_checkpointed_iteration.txt
+Epoch 1/1:  37%|███▋      | 210/563 [3:06:30<5:54:08, 60.19s/it]step:211 - train/loss:0.290229856967926 - train/lr(1e-3):0.007380416461677188 - train/time(s):52.731613874435425
+Epoch 1/1:  37%|███▋      | 211/563 [3:07:23<5:40:00, 57.96s/it]step:212 - train/loss:0.2986738681793213 - train/lr(1e-3):0.007354555782673474 - train/time(s):52.83013343811035
+Epoch 1/1:  38%|███▊      | 212/563 [3:08:16<5:30:03, 56.42s/it]step:213 - train/loss:0.3006786108016968 - train/lr(1e-3):0.007328613914160319 - train/time(s):53.01344561576843
+Epoch 1/1:  38%|███▊      | 213/563 [3:09:09<5:23:09, 55.40s/it]step:214 - train/loss:0.29029420018196106 - train/lr(1e-3):0.007302591750662116 - train/time(s):52.53175330162048
+Epoch 1/1:  38%|███▊      | 214/563 [3:10:01<5:17:14, 54.54s/it]step:215 - train/loss:0.31225043535232544 - train/lr(1e-3):0.007276490189471976 - train/time(s):52.70131516456604
+Epoch 1/1:  38%|███▊      | 215/563 [3:10:54<5:13:08, 53.99s/it]step:216 - train/loss:0.29553812742233276 - train/lr(1e-3):0.007250310130620799 - train/time(s):52.823424100875854
+Epoch 1/1:  38%|███▊      | 216/563 [3:11:47<5:10:13, 53.64s/it]step:217 - train/loss:0.2968265414237976 - train/lr(1e-3):0.007224052476846221 - train/time(s):52.790388345718384
+Epoch 1/1:  39%|███▊      | 217/563 [3:12:40<5:07:51, 53.39s/it]step:218 - train/loss:0.27438265085220337 - train/lr(1e-3):0.007197718133561509 - train/time(s):52.38396239280701
+Epoch 1/1:  39%|███▊      | 218/563 [3:13:32<5:05:15, 53.09s/it]step:219 - train/loss:0.29006242752075195 - train/lr(1e-3):0.007171308008824316 - train/time(s):52.934924364089966
+Epoch 1/1:  39%|███▉      | 219/563 [3:14:25<5:04:06, 53.04s/it]step:220 - train/loss:0.31054478883743286 - train/lr(1e-3):0.007144823013305395 - train/time(s):52.58503270149231
+Epoch 1/1:  39%|███▉      | 220/563 [3:15:18<5:02:26, 52.91s/it]step:221 - train/loss:0.2890922427177429 - train/lr(1e-3):0.00711826406025717 - train/time(s):52.907374143600464
+Epoch 1/1:  39%|███▉      | 221/563 [3:16:11<5:01:34, 52.91s/it]step:222 - train/loss:0.3000572919845581 - train/lr(1e-3):0.007091632065482272 - train/time(s):52.93846940994263
+Epoch 1/1:  39%|███▉      | 222/563 [3:17:04<5:00:45, 52.92s/it]step:223 - train/loss:0.29907023906707764 - train/lr(1e-3):0.007064927947301942 - train/time(s):53.31242084503174
+Epoch 1/1:  40%|███▉      | 223/563 [3:17:57<5:00:32, 53.04s/it]step:224 - train/loss:0.29648274183273315 - train/lr(1e-3):0.007038152626524374 - train/time(s):52.71624517440796
+Epoch 1/1:  40%|███▉      | 224/563 [3:18:50<4:59:07, 52.94s/it]step:225 - train/loss:0.2806326150894165 - train/lr(1e-3):0.007011307026412959 - train/time(s):52.732834577560425
+Epoch 1/1:  40%|███▉      | 225/563 [3:19:42<4:57:53, 52.88s/it]step:226 - train/loss:0.29453641176223755 - train/lr(1e-3):0.0069843920726544535 - train/time(s):52.395763874053955
+Epoch 1/1:  40%|████      | 226/563 [3:20:35<4:56:12, 52.74s/it]step:227 - train/loss:0.2870585322380066 - train/lr(1e-3):0.006957408693327056 - train/time(s):53.02342772483826
+Epoch 1/1:  40%|████      | 227/563 [3:21:28<4:55:48, 52.82s/it]step:228 - train/loss:0.28934043645858765 - train/lr(1e-3):0.006930357818868409 - train/time(s):52.965850591659546
+Epoch 1/1:  40%|████      | 228/563 [3:22:21<4:55:10, 52.87s/it]step:229 - train/loss:0.28594231605529785 - train/lr(1e-3):0.006903240382043514 - train/time(s):52.985533714294434
+Epoch 1/1:  41%|████      | 229/563 [3:23:14<4:54:29, 52.90s/it]step:230 - train/loss:0.28303778171539307 - train/lr(1e-3):0.006876057317912569 - train/time(s):53.04686236381531
+Epoch 1/1:  41%|████      | 230/563 [3:24:07<4:53:51, 52.95s/it]step:231 - train/loss:0.27693718671798706 - train/lr(1e-3):0.00684880956379872 - train/time(s):53.03623938560486
+Epoch 1/1:  41%|████      | 231/563 [3:25:00<4:53:07, 52.98s/it]step:232 - train/loss:0.2881229519844055 - train/lr(1e-3):0.006821498059255752 - train/time(s):52.795833587646484
+Epoch 1/1:  41%|████      | 232/563 [3:25:53<4:51:57, 52.92s/it]step:233 - train/loss:0.29617348313331604 - train/lr(1e-3):0.006794123746035679 - train/time(s):52.80839490890503
+Epoch 1/1:  41%|████▏     | 233/563 [3:26:45<4:50:53, 52.89s/it]step:234 - train/loss:0.29818880558013916 - train/lr(1e-3):0.006766687568056282 - train/time(s):53.01252841949463
+Epoch 1/1:  42%|████▏     | 234/563 [3:27:38<4:50:13, 52.93s/it]step:235 - train/loss:0.2871745824813843 - train/lr(1e-3):0.006739190471368549 - train/time(s):52.944045305252075
+Epoch 1/1:  42%|████▏     | 235/563 [3:28:31<4:49:22, 52.93s/it]step:236 - train/loss:0.30810660123825073 - train/lr(1e-3):0.006711633404124061 - train/time(s):52.856523752212524
+Epoch 1/1:  42%|████▏     | 236/563 [3:29:24<4:48:22, 52.91s/it]step:237 - train/loss:0.30913853645324707 - train/lr(1e-3):0.0066840173165423015 - train/time(s):52.81812143325806
+Epoch 1/1:  42%|████▏     | 237/563 [3:30:17<4:47:20, 52.88s/it]step:238 - train/loss:0.3002879023551941 - train/lr(1e-3):0.00665634316087788 - train/time(s):52.929624795913696
+Epoch 1/1:  42%|████▏     | 238/563 [3:31:10<4:46:32, 52.90s/it]step:239 - train/loss:0.2936370074748993 - train/lr(1e-3):0.006628611891387706 - train/time(s):53.01183009147644
+Epoch 1/1:  42%|████▏     | 239/563 [3:32:03<4:45:50, 52.93s/it]step:240 - train/loss:0.2850050926208496 - train/lr(1e-3):0.006600824464298082 - train/time(s):52.841570138931274
+Epoch 1/1:  43%|████▎     | 240/563 [3:32:56<4:44:49, 52.91s/it]step:241 - train/loss:0.296101450920105 - train/lr(1e-3):0.0065729818377717256 - train/time(s):52.97417974472046
+Epoch 1/1:  43%|████▎     | 241/563 [3:33:49<4:44:02, 52.93s/it]step:242 - train/loss:0.2915725111961365 - train/lr(1e-3):0.006545084971874737 - train/time(s):52.76258063316345
+Epoch 1/1:  43%|████▎     | 242/563 [3:34:42<4:42:54, 52.88s/it]step:243 - train/loss:0.31310147047042847 - train/lr(1e-3):0.006517134828543497 - train/time(s):52.971198320388794
+Epoch 1/1:  43%|████▎     | 243/563 [3:35:35<4:42:10, 52.91s/it]step:244 - train/loss:0.2958996295928955 - train/lr(1e-3):0.006489132371551482 - train/time(s):52.771642208099365
+Epoch 1/1:  43%|████▎     | 244/563 [3:36:27<4:41:05, 52.87s/it]step:245 - train/loss:0.292620450258255 - train/lr(1e-3):0.006461078566476053 - train/time(s):52.919509172439575
+Epoch 1/1:  44%|████▎     | 245/563 [3:37:20<4:40:17, 52.88s/it]step:246 - train/loss:0.2828877568244934 - train/lr(1e-3):0.00643297438066514 - train/time(s):52.815789461135864
+Epoch 1/1:  44%|████▎     | 246/563 [3:38:13<4:39:18, 52.87s/it]step:247 - train/loss:0.3039400577545166 - train/lr(1e-3):0.006404820783203901 - train/time(s):52.848684310913086
+Epoch 1/1:  44%|████▍     | 247/563 [3:39:06<4:38:24, 52.86s/it]step:248 - train/loss:0.2839484214782715 - train/lr(1e-3):0.0063766187448813 - train/time(s):52.99452352523804
+Epoch 1/1:  44%|████▍     | 248/563 [3:39:59<4:37:44, 52.90s/it]step:249 - train/loss:0.29006850719451904 - train/lr(1e-3):0.00634836923815663 - train/time(s):52.8136773109436
+Epoch 1/1:  44%|████▍     | 249/563 [3:40:52<4:36:43, 52.88s/it]step:250 - train/loss:0.27823972702026367 - train/lr(1e-3):0.00632007323712599 - train/time(s):53.06937265396118
+Epoch 1/1:  44%|████▍     | 250/563 [3:41:45<4:36:09, 52.94s/it]step:251 - train/loss:0.27953779697418213 - train/lr(1e-3):0.0062917317174886805 - train/time(s):52.690712213516235
+Epoch 1/1:  45%|████▍     | 251/563 [3:42:38<4:34:53, 52.87s/it]step:252 - train/loss:0.31913021206855774 - train/lr(1e-3):0.006263345656513577 - train/time(s):52.82805061340332
+Epoch 1/1:  45%|████▍     | 252/563 [3:43:30<4:33:57, 52.86s/it]step:253 - train/loss:0.2962660789489746 - train/lr(1e-3):0.006234916033005421 - train/time(s):52.782724142074585
+Epoch 1/1:  45%|████▍     | 253/563 [3:44:23<4:32:58, 52.83s/it]step:254 - train/loss:0.30783358216285706 - train/lr(1e-3):0.0062064438272710735 - train/time(s):52.55820369720459
+Epoch 1/1:  45%|████▌     | 254/563 [3:45:16<4:31:40, 52.75s/it]step:255 - train/loss:0.30170056223869324 - train/lr(1e-3):0.00617793002108571 - train/time(s):53.19183588027954
+Epoch 1/1:  45%|████▌     | 255/563 [3:46:09<4:31:29, 52.89s/it]step:256 - train/loss:0.2876632809638977 - train/lr(1e-3):0.006149375597658967 - train/time(s):52.965198040008545
+Epoch 1/1:  45%|████▌     | 256/563 [3:47:02<4:30:43, 52.91s/it]step:257 - train/loss:0.2700878083705902 - train/lr(1e-3):0.00612078154160104 - train/time(s):52.99699640274048
+Epoch 1/1:  46%|████▌     | 257/563 [3:47:55<4:29:59, 52.94s/it]step:258 - train/loss:0.28786003589630127 - train/lr(1e-3):0.006092148838888731 - train/time(s):52.795456647872925
+Epoch 1/1:  46%|████▌     | 258/563 [3:48:48<4:28:53, 52.90s/it]step:259 - train/loss:0.29966962337493896 - train/lr(1e-3):0.006063478476831457 - train/time(s):52.96968483924866
+Epoch 1/1:  46%|████▌     | 259/563 [3:49:41<4:28:07, 52.92s/it]step:260 - train/loss:0.2832309603691101 - train/lr(1e-3):0.006034771444037193 - train/time(s):52.5124831199646
+Epoch 1/1:  46%|████▌     | 260/563 [3:50:33<4:26:38, 52.80s/it]step:261 - train/loss:0.31013724207878113 - train/lr(1e-3):0.006006028730378393 - train/time(s):53.06415271759033
+Epoch 1/1:  46%|████▋     | 261/563 [3:51:26<4:26:09, 52.88s/it]step:262 - train/loss:0.288053035736084 - train/lr(1e-3):0.0059772513269578526 - train/time(s):52.63089394569397
+Epoch 1/1:  47%|████▋     | 262/563 [3:52:19<4:24:54, 52.81s/it]step:263 - train/loss:0.28380286693573 - train/lr(1e-3):0.005948440226074539 - train/time(s):52.69754505157471
+Epoch 1/1:  47%|████▋     | 263/563 [3:53:12<4:23:52, 52.78s/it]step:264 - train/loss:0.28076910972595215 - train/lr(1e-3):0.005919596421189368 - train/time(s):53.26352119445801
+Epoch 1/1:  47%|████▋     | 264/563 [3:54:05<4:23:43, 52.92s/it]step:265 - train/loss:0.2845642566680908 - train/lr(1e-3):0.005890720906890955 - train/time(s):52.621609926223755
+Epoch 1/1:  47%|████▋     | 265/563 [3:54:57<4:22:24, 52.83s/it]step:266 - train/loss:0.2960453927516937 - train/lr(1e-3):0.005861814678861311 - train/time(s):52.94128966331482
+Epoch 1/1:  47%|████▋     | 266/563 [3:55:50<4:21:41, 52.87s/it]step:267 - train/loss:0.2855079174041748 - train/lr(1e-3):0.005832878733841512 - train/time(s):52.843538999557495
+Epoch 1/1:  47%|████▋     | 267/563 [3:56:43<4:20:47, 52.86s/it]step:268 - train/loss:0.3139561414718628 - train/lr(1e-3):0.005803914069597342 - train/time(s):53.16841745376587
+Epoch 1/1:  48%|████▊     | 268/563 [3:57:36<4:20:21, 52.95s/it]step:269 - train/loss:0.3111345171928406 - train/lr(1e-3):0.005774921684884866 - train/time(s):53.15112328529358
+Epoch 1/1:  48%|████▊     | 269/563 [3:58:30<4:19:46, 53.02s/it]step:270 - train/loss:0.29684942960739136 - train/lr(1e-3):0.005745902579416014 - train/time(s):52.96296834945679
+Epoch 1/1:  48%|████▊     | 270/563 [3:59:23<4:18:49, 53.00s/it]step:271 - train/loss:0.3009859621524811 - train/lr(1e-3):0.005716857753824087 - train/time(s):53.10715651512146
+Epoch 1/1:  48%|████▊     | 271/563 [4:00:16<4:18:05, 53.03s/it]step:272 - train/loss:0.2925336956977844 - train/lr(1e-3):0.0056877882096292715 - train/time(s):52.83173394203186
+Epoch 1/1:  48%|████▊     | 272/563 [4:01:09<4:16:55, 52.97s/it]step:273 - train/loss:0.3028761148452759 - train/lr(1e-3):0.005658694949204094 - train/time(s):52.94622778892517
+Epoch 1/1:  48%|████▊     | 273/563 [4:02:01<4:16:00, 52.97s/it]step:274 - train/loss:0.2730937600135803 - train/lr(1e-3):0.005629578975738865 - train/time(s):53.231521129608154
+Epoch 1/1:  49%|████▊     | 274/563 [4:02:55<4:15:30, 53.05s/it]step:275 - train/loss:0.2948187589645386 - train/lr(1e-3):0.005600441293207084 - train/time(s):52.856616735458374
+Epoch 1/1:  49%|████▉     | 275/563 [4:03:48<4:14:21, 52.99s/it]step:276 - train/loss:0.3037331700325012 - train/lr(1e-3):0.00557128290633081 - train/time(s):52.75670623779297
+Epoch 1/1:  49%|████▉     | 276/563 [4:04:40<4:13:08, 52.92s/it]step:277 - train/loss:0.2978766858577728 - train/lr(1e-3):0.005542104820546042 - train/time(s):53.19921588897705
+Epoch 1/1:  49%|████▉     | 277/563 [4:05:34<4:12:39, 53.01s/it]step:278 - train/loss:0.29982396960258484 - train/lr(1e-3):0.005512908041968018 - train/time(s):52.70111322402954
+Epoch 1/1:  49%|████▉     | 278/563 [4:06:26<4:11:21, 52.92s/it]step:279 - train/loss:0.29476624727249146 - train/lr(1e-3):0.005483693577356552 - train/time(s):52.77594494819641
+Epoch 1/1:  50%|████▉     | 279/563 [4:07:19<4:10:16, 52.88s/it]step:280 - train/loss:0.2961415946483612 - train/lr(1e-3):0.005454462434081302 - train/time(s):52.95073056221008
+Saving checkpoint to: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_280
+Checkpoint manager remove previous save local path: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_210
+[2026-10-10 16:29:05,124][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 1] Saved model to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_280/model_world_size_2_rank_1.pt
+[2026-10-10 16:29:06,649][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved model to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_280/model_world_size_2_rank_0.pt
+[2026-10-10 16:29:12,740][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 1] Saved optim to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_280/optim_world_size_2_rank_1.pt
+[2026-10-10 16:29:12,742][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 1] Saved extra_state to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_280/extra_state_world_size_2_rank_1.pt
+/root/pb-venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[2026-10-10 16:29:14,122][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved optim to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_280/optim_world_size_2_rank_0.pt
+[2026-10-10 16:29:14,123][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved extra_state to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_280/extra_state_world_size_2_rank_0.pt
+[2026-10-10 16:29:14,202][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved model config and tokenizer class to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_280/huggingface
+/root/pb-venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[2026-10-10 16:29:22,853][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved hf_model to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_280/huggingface
+Saved dataloader state to: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_280/data.pt
+Updated checkpoint tracker: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/latest_checkpointed_iteration.txt
+Epoch 1/1:  50%|████▉     | 280/563 [4:08:37<4:45:12, 60.47s/it]step:281 - train/loss:0.3019638657569885 - train/lr(1e-3):0.0054252156200870335 - train/time(s):53.285825967788696
+Epoch 1/1:  50%|████▉     | 281/563 [4:09:30<4:34:04, 58.31s/it]step:282 - train/loss:0.29839468002319336 - train/lr(1e-3):0.0053959541438588715 - train/time(s):52.957275390625
+Epoch 1/1:  50%|█████     | 282/563 [4:10:23<4:25:34, 56.71s/it]step:283 - train/loss:0.28816914558410645 - train/lr(1e-3):0.00536667901438752 - train/time(s):52.82497191429138
+Epoch 1/1:  50%|█████     | 283/563 [4:11:16<4:19:12, 55.54s/it]step:284 - train/loss:0.28778713941574097 - train/lr(1e-3):0.0053373912411344765 - train/time(s):52.75800442695618
+Epoch 1/1:  50%|█████     | 284/563 [4:12:09<4:14:23, 54.71s/it]step:285 - train/loss:0.3023979067802429 - train/lr(1e-3):0.005308091833997218 - train/time(s):52.78485870361328
+Epoch 1/1:  51%|█████     | 285/563 [4:13:02<4:10:48, 54.13s/it]step:286 - train/loss:0.2954338490962982 - train/lr(1e-3):0.005278781803274376 - train/time(s):52.720274686813354
+Epoch 1/1:  51%|█████     | 286/563 [4:13:55<4:07:57, 53.71s/it]step:287 - train/loss:0.2946379780769348 - train/lr(1e-3):0.005249462159630908 - train/time(s):52.9631712436676
+Epoch 1/1:  51%|█████     | 287/563 [4:14:47<4:06:02, 53.49s/it]step:288 - train/loss:0.3031429052352905 - train/lr(1e-3):0.005220133914063239 - train/time(s):52.787055015563965
+Epoch 1/1:  51%|█████     | 288/563 [4:15:40<4:04:11, 53.28s/it]step:289 - train/loss:0.2924550175666809 - train/lr(1e-3):0.005190798077864412 - train/time(s):53.1250786781311
+Epoch 1/1:  51%|█████▏    | 289/563 [4:16:34<4:03:19, 53.28s/it]step:290 - train/loss:0.27950334548950195 - train/lr(1e-3):0.005161455662589201 - train/time(s):52.97815203666687
+Epoch 1/1:  52%|█████▏    | 290/563 [4:17:27<4:02:01, 53.19s/it]step:291 - train/loss:0.3096761107444763 - train/lr(1e-3):0.005132107680019242 - train/time(s):52.675971269607544
+Epoch 1/1:  52%|█████▏    | 291/563 [4:18:19<4:00:26, 53.04s/it]step:292 - train/loss:0.29099416732788086 - train/lr(1e-3):0.005102755142128143 - train/time(s):52.680885791778564
+Epoch 1/1:  52%|█████▏    | 292/563 [4:19:12<3:59:04, 52.93s/it]step:293 - train/loss:0.2887391448020935 - train/lr(1e-3):0.005073399061046584 - train/time(s):53.03060817718506
+Epoch 1/1:  52%|█████▏    | 293/563 [4:20:05<3:58:20, 52.96s/it]step:294 - train/loss:0.2821182906627655 - train/lr(1e-3):0.005044040449027426 - train/time(s):52.81750440597534
+Epoch 1/1:  52%|█████▏    | 294/563 [4:20:58<3:57:15, 52.92s/it]step:295 - train/loss:0.28559520840644836 - train/lr(1e-3):0.0050146803184108 - train/time(s):53.28477644920349
+Epoch 1/1:  52%|█████▏    | 295/563 [4:21:51<3:56:52, 53.03s/it]step:296 - train/loss:0.2886466383934021 - train/lr(1e-3):0.0049853196815892 - train/time(s):52.98162317276001
+Epoch 1/1:  53%|█████▎    | 296/563 [4:22:44<3:55:55, 53.02s/it]step:297 - train/loss:0.30507683753967285 - train/lr(1e-3):0.004955959550972575 - train/time(s):53.17978286743164
+Epoch 1/1:  53%|█████▎    | 297/563 [4:23:37<3:55:15, 53.07s/it]step:298 - train/loss:0.28269079327583313 - train/lr(1e-3):0.004926600938953418 - train/time(s):52.71399688720703
+Epoch 1/1:  53%|█████▎    | 298/563 [4:24:30<3:53:55, 52.96s/it]step:299 - train/loss:0.3049132823944092 - train/lr(1e-3):0.004897244857871861 - train/time(s):53.294381856918335
+Epoch 1/1:  53%|█████▎    | 299/563 [4:25:23<3:53:28, 53.06s/it]step:300 - train/loss:0.2853935956954956 - train/lr(1e-3):0.00486789231998076 - train/time(s):52.72937226295471
+Epoch 1/1:  53%|█████▎    | 300/563 [4:26:16<3:52:09, 52.96s/it]step:301 - train/loss:0.2969389259815216 - train/lr(1e-3):0.004838544337410801 - train/time(s):52.93386626243591
+Epoch 1/1:  53%|█████▎    | 301/563 [4:27:09<3:51:14, 52.96s/it]step:302 - train/loss:0.29364949464797974 - train/lr(1e-3):0.004809201922135589 - train/time(s):52.91442847251892
+Epoch 1/1:  54%|█████▎    | 302/563 [4:28:02<3:50:18, 52.94s/it]step:303 - train/loss:0.28117427229881287 - train/lr(1e-3):0.004779866085936762 - train/time(s):53.24699783325195
+Epoch 1/1:  54%|█████▍    | 303/563 [4:28:55<3:49:49, 53.04s/it]step:304 - train/loss:0.3025306463241577 - train/lr(1e-3):0.0047505378403690955 - train/time(s):52.59072995185852
+Epoch 1/1:  54%|█████▍    | 304/563 [4:29:48<3:48:22, 52.90s/it]step:305 - train/loss:0.30312833189964294 - train/lr(1e-3):0.004721218196725626 - train/time(s):53.22677707672119
+Epoch 1/1:  54%|█████▍    | 305/563 [4:30:41<3:47:54, 53.00s/it]step:306 - train/loss:0.27679458260536194 - train/lr(1e-3):0.004691908166002784 - train/time(s):52.98089790344238
+Epoch 1/1:  54%|█████▍    | 306/563 [4:31:34<3:47:00, 53.00s/it]step:307 - train/loss:0.28409451246261597 - train/lr(1e-3):0.004662608758865524 - train/time(s):52.984519958496094
+Epoch 1/1:  55%|█████▍    | 307/563 [4:32:27<3:46:06, 52.99s/it]step:308 - train/loss:0.3262125253677368 - train/lr(1e-3):0.004633320985612481 - train/time(s):52.8254930973053
+Epoch 1/1:  55%|█████▍    | 308/563 [4:33:20<3:45:00, 52.94s/it]step:309 - train/loss:0.30617833137512207 - train/lr(1e-3):0.00460404585614113 - train/time(s):53.010679483413696
+Epoch 1/1:  55%|█████▍    | 309/563 [4:34:13<3:44:13, 52.97s/it]step:310 - train/loss:0.30076897144317627 - train/lr(1e-3):0.004574784379912968 - train/time(s):52.90496015548706
+Epoch 1/1:  55%|█████▌    | 310/563 [4:35:06<3:43:15, 52.95s/it]step:311 - train/loss:0.3057500720024109 - train/lr(1e-3):0.0045455375659187 - train/time(s):52.85778093338013
+Epoch 1/1:  55%|█████▌    | 311/563 [4:35:59<3:42:16, 52.92s/it]step:312 - train/loss:0.31453919410705566 - train/lr(1e-3):0.0045163064226434475 - train/time(s):53.059136152267456
+Epoch 1/1:  55%|█████▌    | 312/563 [4:36:52<3:41:34, 52.97s/it]step:313 - train/loss:0.2817770838737488 - train/lr(1e-3):0.004487091958031984 - train/time(s):53.020944595336914
+Epoch 1/1:  56%|█████▌    | 313/563 [4:37:45<3:40:45, 52.98s/it]step:314 - train/loss:0.3045600652694702 - train/lr(1e-3):0.004457895179453962 - train/time(s):52.616647481918335
+Epoch 1/1:  56%|█████▌    | 314/563 [4:38:37<3:39:25, 52.87s/it]step:315 - train/loss:0.30081021785736084 - train/lr(1e-3):0.004428717093669191 - train/time(s):52.79211139678955
+Epoch 1/1:  56%|█████▌    | 315/563 [4:39:30<3:38:27, 52.85s/it]step:316 - train/loss:0.3062140941619873 - train/lr(1e-3):0.004399558706792918 - train/time(s):52.6928653717041
+Epoch 1/1:  56%|█████▌    | 316/563 [4:40:23<3:37:22, 52.80s/it]step:317 - train/loss:0.3185458183288574 - train/lr(1e-3):0.004370421024261134 - train/time(s):53.2172794342041
+Epoch 1/1:  56%|█████▋    | 317/563 [4:41:16<3:37:00, 52.93s/it]step:318 - train/loss:0.2876635193824768 - train/lr(1e-3):0.004341305050795907 - train/time(s):53.17873930931091
+Epoch 1/1:  56%|█████▋    | 318/563 [4:42:09<3:36:26, 53.01s/it]step:319 - train/loss:0.2812729477882385 - train/lr(1e-3):0.0043122117903707305 - train/time(s):53.022114276885986
+Epoch 1/1:  57%|█████▋    | 319/563 [4:43:02<3:35:34, 53.01s/it]step:320 - train/loss:0.29400634765625 - train/lr(1e-3):0.004283142246175915 - train/time(s):52.76089286804199
+Epoch 1/1:  57%|█████▋    | 320/563 [4:43:55<3:34:23, 52.94s/it]step:321 - train/loss:0.3018178343772888 - train/lr(1e-3):0.004254097420583988 - train/time(s):53.01467514038086
+Epoch 1/1:  57%|█████▋    | 321/563 [4:44:48<3:33:36, 52.96s/it]step:322 - train/loss:0.28044360876083374 - train/lr(1e-3):0.004225078315115134 - train/time(s):53.079413175582886
+Epoch 1/1:  57%|█████▋    | 322/563 [4:45:41<3:32:52, 53.00s/it]step:323 - train/loss:0.2897574305534363 - train/lr(1e-3):0.00419608593040266 - train/time(s):52.80534052848816
+Epoch 1/1:  57%|█████▋    | 323/563 [4:46:34<3:31:46, 52.94s/it]step:324 - train/loss:0.29151594638824463 - train/lr(1e-3):0.004167121266158489 - train/time(s):53.126370668411255
+Epoch 1/1:  58%|█████▊    | 324/563 [4:47:27<3:31:06, 53.00s/it]step:325 - train/loss:0.28708145022392273 - train/lr(1e-3):0.004138185321138691 - train/time(s):53.18257284164429
+Epoch 1/1:  58%|█████▊    | 325/563 [4:48:20<3:30:27, 53.05s/it]step:326 - train/loss:0.31811684370040894 - train/lr(1e-3):0.004109279093109045 - train/time(s):52.88628888130188
+Epoch 1/1:  58%|█████▊    | 326/563 [4:49:13<3:29:22, 53.01s/it]step:327 - train/loss:0.2928369641304016 - train/lr(1e-3):0.004080403578810631 - train/time(s):52.8582558631897
+Epoch 1/1:  58%|█████▊    | 327/563 [4:50:06<3:28:19, 52.96s/it]step:328 - train/loss:0.2865641713142395 - train/lr(1e-3):0.0040515597739254625 - train/time(s):52.629695892333984
+Epoch 1/1:  58%|█████▊    | 328/563 [4:50:59<3:27:03, 52.86s/it]step:329 - train/loss:0.28837519884109497 - train/lr(1e-3):0.0040227486730421485 - train/time(s):52.719154357910156
+Epoch 1/1:  58%|█████▊    | 329/563 [4:51:51<3:26:00, 52.82s/it]step:330 - train/loss:0.2997879087924957 - train/lr(1e-3):0.00399397126962161 - train/time(s):53.004464626312256
+Epoch 1/1:  59%|█████▊    | 330/563 [4:52:44<3:25:20, 52.88s/it]step:331 - train/loss:0.30263882875442505 - train/lr(1e-3):0.003965228555962808 - train/time(s):53.25791835784912
+Epoch 1/1:  59%|█████▉    | 331/563 [4:53:38<3:24:54, 52.99s/it]step:332 - train/loss:0.28310346603393555 - train/lr(1e-3):0.003936521523168543 - train/time(s):52.68439269065857
+Epoch 1/1:  59%|█████▉    | 332/563 [4:54:30<3:23:40, 52.90s/it]step:333 - train/loss:0.31036996841430664 - train/lr(1e-3):0.00390785116111127 - train/time(s):52.49703001976013
+Epoch 1/1:  59%|█████▉    | 333/563 [4:55:23<3:22:19, 52.78s/it]step:334 - train/loss:0.30069100856781006 - train/lr(1e-3):0.003879218458398962 - train/time(s):53.24883699417114
+Epoch 1/1:  59%|█████▉    | 334/563 [4:56:16<3:21:59, 52.92s/it]step:335 - train/loss:0.31305307149887085 - train/lr(1e-3):0.003850624402341034 - train/time(s):52.732455015182495
+Epoch 1/1:  60%|█████▉    | 335/563 [4:57:09<3:20:53, 52.87s/it]step:336 - train/loss:0.28274989128112793 - train/lr(1e-3):0.0038220699789142903 - train/time(s):52.977232217788696
+Epoch 1/1:  60%|█████▉    | 336/563 [4:58:02<3:20:08, 52.90s/it]step:337 - train/loss:0.29096266627311707 - train/lr(1e-3):0.0037935561727289267 - train/time(s):53.24491047859192
+Epoch 1/1:  60%|█████▉    | 337/563 [4:58:55<3:19:39, 53.00s/it]step:338 - train/loss:0.2734599709510803 - train/lr(1e-3):0.0037650839669945806 - train/time(s):52.831746101379395
+Epoch 1/1:  60%|██████    | 338/563 [4:59:48<3:18:34, 52.95s/it]step:339 - train/loss:0.2965180277824402 - train/lr(1e-3):0.003736654343486425 - train/time(s):52.80169105529785
+Epoch 1/1:  60%|██████    | 339/563 [5:00:41<3:17:31, 52.91s/it]step:340 - train/loss:0.29718416929244995 - train/lr(1e-3):0.0037082682825113214 - train/time(s):52.80084681510925
+Epoch 1/1:  60%|██████    | 340/563 [5:01:33<3:16:31, 52.88s/it]step:341 - train/loss:0.3111655116081238 - train/lr(1e-3):0.0036799267628740123 - train/time(s):53.08120584487915
+Epoch 1/1:  61%|██████    | 341/563 [5:02:26<3:15:52, 52.94s/it]step:342 - train/loss:0.2940329909324646 - train/lr(1e-3):0.00365163076184337 - train/time(s):53.23057270050049
+Epoch 1/1:  61%|██████    | 342/563 [5:03:20<3:15:19, 53.03s/it]step:343 - train/loss:0.2790486216545105 - train/lr(1e-3):0.003623381255118702 - train/time(s):52.890156984329224
+Epoch 1/1:  61%|██████    | 343/563 [5:04:13<3:14:17, 52.99s/it]step:344 - train/loss:0.29516640305519104 - train/lr(1e-3):0.0035951792167960997 - train/time(s):52.639771461486816
+Epoch 1/1:  61%|██████    | 344/563 [5:05:05<3:13:01, 52.88s/it]step:345 - train/loss:0.29127606749534607 - train/lr(1e-3):0.0035670256193348613 - train/time(s):52.79069232940674
+Epoch 1/1:  61%|██████▏   | 345/563 [5:05:58<3:12:03, 52.86s/it]step:346 - train/loss:0.296119749546051 - train/lr(1e-3):0.0035389214335239485 - train/time(s):52.98387169837952
+Epoch 1/1:  61%|██████▏   | 346/563 [5:06:51<3:11:18, 52.90s/it]step:347 - train/loss:0.29209190607070923 - train/lr(1e-3):0.0035108676284485176 - train/time(s):52.73840856552124
+Epoch 1/1:  62%|██████▏   | 347/563 [5:07:44<3:10:15, 52.85s/it]step:348 - train/loss:0.2812837064266205 - train/lr(1e-3):0.0034828651714565056 - train/time(s):52.786109924316406
+Epoch 1/1:  62%|██████▏   | 348/563 [5:08:37<3:09:18, 52.83s/it]step:349 - train/loss:0.29751282930374146 - train/lr(1e-3):0.0034549150281252636 - train/time(s):53.245246171951294
+Epoch 1/1:  62%|██████▏   | 349/563 [5:09:30<3:08:52, 52.96s/it]step:350 - train/loss:0.31040772795677185 - train/lr(1e-3):0.0034270181622282764 - train/time(s):52.95000958442688
+Saving checkpoint to: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_350
+Checkpoint manager remove previous save local path: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_280
+[2026-10-10 17:31:16,577][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 1] Saved model to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_350/model_world_size_2_rank_1.pt
+[2026-10-10 17:31:17,694][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved model to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_350/model_world_size_2_rank_0.pt
+[2026-10-10 17:31:23,631][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 1] Saved optim to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_350/optim_world_size_2_rank_1.pt
+[2026-10-10 17:31:23,632][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 1] Saved extra_state to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_350/extra_state_world_size_2_rank_1.pt
+/root/pb-venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[2026-10-10 17:31:26,038][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved optim to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_350/optim_world_size_2_rank_0.pt
+[2026-10-10 17:31:26,039][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved extra_state to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_350/extra_state_world_size_2_rank_0.pt
+[2026-10-10 17:31:26,110][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved model config and tokenizer class to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_350/huggingface
+/root/pb-venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[2026-10-10 17:31:35,443][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved hf_model to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_350/huggingface
+Saved dataloader state to: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_350/data.pt
+Updated checkpoint tracker: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/latest_checkpointed_iteration.txt
+Epoch 1/1:  62%|██████▏   | 350/563 [5:10:50<3:36:46, 61.06s/it]step:351 - train/loss:0.2805216312408447 - train/lr(1e-3):0.0033991755357019194 - train/time(s):52.644158601760864
+Epoch 1/1:  62%|██████▏   | 351/563 [5:11:42<3:26:50, 58.54s/it]step:352 - train/loss:0.27668315172195435 - train/lr(1e-3):0.0033713881086122935 - train/time(s):53.3874454498291
+Epoch 1/1:  63%|██████▎   | 352/563 [5:12:36<3:20:25, 56.99s/it]step:353 - train/loss:0.2897513806819916 - train/lr(1e-3):0.0033436568391221216 - train/time(s):52.513606548309326
+Epoch 1/1:  63%|██████▎   | 353/563 [5:13:28<3:14:46, 55.65s/it]step:354 - train/loss:0.2921406328678131 - train/lr(1e-3):0.0033159826834577 - train/time(s):52.63741588592529
+Epoch 1/1:  63%|██████▎   | 354/563 [5:14:21<3:10:42, 54.75s/it]step:355 - train/loss:0.2877168655395508 - train/lr(1e-3):0.0032883665958759393 - train/time(s):52.7433922290802
+Epoch 1/1:  63%|██████▎   | 355/563 [5:15:14<3:07:42, 54.15s/it]step:356 - train/loss:0.29317963123321533 - train/lr(1e-3):0.003260809528631452 - train/time(s):52.83582925796509
+Epoch 1/1:  63%|██████▎   | 356/563 [5:16:07<3:05:27, 53.76s/it]step:357 - train/loss:0.2955645024776459 - train/lr(1e-3):0.0032333124319437185 - train/time(s):52.805625677108765
+Epoch 1/1:  63%|██████▎   | 357/563 [5:16:59<3:03:35, 53.47s/it]step:358 - train/loss:0.2766716778278351 - train/lr(1e-3):0.0032058762539643212 - train/time(s):52.720746755599976
+Epoch 1/1:  64%|██████▎   | 358/563 [5:17:52<3:01:55, 53.25s/it]step:359 - train/loss:0.2826494872570038 - train/lr(1e-3):0.0031785019407442492 - train/time(s):52.951911211013794
+Epoch 1/1:  64%|██████▍   | 359/563 [5:18:45<3:00:44, 53.16s/it]step:360 - train/loss:0.2884790003299713 - train/lr(1e-3):0.0031511904362012807 - train/time(s):52.68542122840881
+Epoch 1/1:  64%|██████▍   | 360/563 [5:19:38<2:59:22, 53.02s/it]step:361 - train/loss:0.3041996359825134 - train/lr(1e-3):0.003123942682087433 - train/time(s):53.07464528083801
+Epoch 1/1:  64%|██████▍   | 361/563 [5:20:31<2:58:33, 53.04s/it]step:362 - train/loss:0.28794804215431213 - train/lr(1e-3):0.003096759617956486 - train/time(s):52.891096353530884
+Epoch 1/1:  64%|██████▍   | 362/563 [5:21:24<2:57:31, 52.99s/it]step:363 - train/loss:0.2840844392776489 - train/lr(1e-3):0.0030696421811315924 - train/time(s):53.079214572906494
+Epoch 1/1:  64%|██████▍   | 363/563 [5:22:17<2:56:44, 53.02s/it]step:364 - train/loss:0.29269641637802124 - train/lr(1e-3):0.0030425913066729465 - train/time(s):52.90934610366821
+Epoch 1/1:  65%|██████▍   | 364/563 [5:23:10<2:55:45, 52.99s/it]step:365 - train/loss:0.28166282176971436 - train/lr(1e-3):0.0030156079273455485 - train/time(s):52.96553826332092
+Epoch 1/1:  65%|██████▍   | 365/563 [5:24:03<2:54:50, 52.98s/it]step:366 - train/loss:0.2971951365470886 - train/lr(1e-3):0.002988692973587042 - train/time(s):52.98090839385986
+Epoch 1/1:  65%|██████▌   | 366/563 [5:24:56<2:53:57, 52.98s/it]step:367 - train/loss:0.30008983612060547 - train/lr(1e-3):0.0029618473734756264 - train/time(s):53.08333349227905
+Epoch 1/1:  65%|██████▌   | 367/563 [5:25:49<2:53:10, 53.01s/it]step:368 - train/loss:0.274648517370224 - train/lr(1e-3):0.0029350720526980594 - train/time(s):53.04207181930542
+Epoch 1/1:  65%|██████▌   | 368/563 [5:26:42<2:52:19, 53.02s/it]step:369 - train/loss:0.29002684354782104 - train/lr(1e-3):0.002908367934517729 - train/time(s):52.60594296455383
+Epoch 1/1:  66%|██████▌   | 369/563 [5:27:34<2:51:02, 52.90s/it]step:370 - train/loss:0.2793180048465729 - train/lr(1e-3):0.002881735939742831 - train/time(s):53.20736503601074
+Epoch 1/1:  66%|██████▌   | 370/563 [5:28:28<2:50:27, 52.99s/it]step:371 - train/loss:0.31035614013671875 - train/lr(1e-3):0.0028551769866946076 - train/time(s):52.954278230667114
+Epoch 1/1:  66%|██████▌   | 371/563 [5:29:21<2:49:32, 52.98s/it]step:372 - train/loss:0.2949117422103882 - train/lr(1e-3):0.002828691991175684 - train/time(s):52.75377917289734
+Epoch 1/1:  66%|██████▌   | 372/563 [5:30:13<2:48:26, 52.92s/it]step:373 - train/loss:0.28988075256347656 - train/lr(1e-3):0.0028022818664384945 - train/time(s):52.650773763656616
+Epoch 1/1:  66%|██████▋   | 373/563 [5:31:06<2:47:19, 52.84s/it]step:374 - train/loss:0.3043317198753357 - train/lr(1e-3):0.0027759475231537802 - train/time(s):52.98384237289429
+Epoch 1/1:  66%|██████▋   | 374/563 [5:31:59<2:46:34, 52.88s/it]step:375 - train/loss:0.3045762777328491 - train/lr(1e-3):0.0027496898693792028 - train/time(s):52.73105072975159
+Epoch 1/1:  67%|██████▋   | 375/563 [5:32:52<2:45:33, 52.84s/it]step:376 - train/loss:0.3102787733078003 - train/lr(1e-3):0.0027235098105280243 - train/time(s):52.96656799316406
+Epoch 1/1:  67%|██████▋   | 376/563 [5:33:45<2:44:48, 52.88s/it]step:377 - train/loss:0.29518887400627136 - train/lr(1e-3):0.002697408249337886 - train/time(s):52.783939599990845
+Epoch 1/1:  67%|██████▋   | 377/563 [5:34:37<2:43:50, 52.85s/it]step:378 - train/loss:0.2956337332725525 - train/lr(1e-3):0.002671386085839682 - train/time(s):52.900376081466675
+Epoch 1/1:  67%|██████▋   | 378/563 [5:35:30<2:43:00, 52.87s/it]step:379 - train/loss:0.2964802384376526 - train/lr(1e-3):0.002645444217326528 - train/time(s):52.74310922622681
+Epoch 1/1:  67%|██████▋   | 379/563 [5:36:23<2:42:00, 52.83s/it]step:380 - train/loss:0.2784384787082672 - train/lr(1e-3):0.002619583538322813 - train/time(s):53.079721450805664
+Epoch 1/1:  67%|██████▋   | 380/563 [5:37:16<2:41:21, 52.91s/it]step:381 - train/loss:0.29923075437545776 - train/lr(1e-3):0.0025938049405533625 - train/time(s):52.889293909072876
+Epoch 1/1:  68%|██████▊   | 381/563 [5:38:09<2:40:28, 52.90s/it]step:382 - train/loss:0.3060677945613861 - train/lr(1e-3):0.002568109312912687 - train/time(s):52.821813106536865
+Epoch 1/1:  68%|██████▊   | 382/563 [5:39:02<2:39:31, 52.88s/it]step:383 - train/loss:0.281785249710083 - train/lr(1e-3):0.002542497541434329 - train/time(s):52.977633237838745
+Epoch 1/1:  68%|██████▊   | 383/563 [5:39:55<2:38:43, 52.91s/it]step:384 - train/loss:0.2931688129901886 - train/lr(1e-3):0.0025169705092603126 - train/time(s):52.66535544395447
+Epoch 1/1:  68%|██████▊   | 384/563 [5:40:48<2:37:37, 52.84s/it]step:385 - train/loss:0.28553307056427 - train/lr(1e-3):0.002491529096610692 - train/time(s):52.58110070228577
+Epoch 1/1:  68%|██████▊   | 385/563 [5:41:40<2:36:31, 52.76s/it]step:386 - train/loss:0.28229060769081116 - train/lr(1e-3):0.002466174180753201 - train/time(s):53.14745545387268
+Epoch 1/1:  69%|██████▊   | 386/563 [5:42:33<2:35:59, 52.88s/it]step:387 - train/loss:0.29310405254364014 - train/lr(1e-3):0.002440906635973 - train/time(s):52.91432571411133
+Epoch 1/1:  69%|██████▊   | 387/563 [5:43:26<2:35:08, 52.89s/it]step:388 - train/loss:0.2934252619743347 - train/lr(1e-3):0.0024157273335425294 - train/time(s):52.98205208778381
+Epoch 1/1:  69%|██████▉   | 388/563 [5:44:19<2:34:20, 52.92s/it]step:389 - train/loss:0.2950408160686493 - train/lr(1e-3):0.0023906371416914708 - train/time(s):53.05993127822876
+Epoch 1/1:  69%|██████▉   | 389/563 [5:45:12<2:33:35, 52.96s/it]step:390 - train/loss:0.29820868372917175 - train/lr(1e-3):0.002365636925576802 - train/time(s):52.7829155921936
+Epoch 1/1:  69%|██████▉   | 390/563 [5:46:05<2:32:33, 52.91s/it]step:391 - train/loss:0.28760063648223877 - train/lr(1e-3):0.002340727547252969 - train/time(s):52.78305101394653
+Epoch 1/1:  69%|██████▉   | 391/563 [5:46:58<2:31:34, 52.87s/it]step:392 - train/loss:0.2938118577003479 - train/lr(1e-3):0.0023159098656421614 - train/time(s):52.75569462776184
+Epoch 1/1:  70%|██████▉   | 392/563 [5:47:51<2:30:35, 52.84s/it]step:393 - train/loss:0.2937043607234955 - train/lr(1e-3):0.0022911847365046953 - train/time(s):53.024085998535156
+Epoch 1/1:  70%|██████▉   | 393/563 [5:48:44<2:29:52, 52.90s/it]step:394 - train/loss:0.2916792035102844 - train/lr(1e-3):0.0022665530124094963 - train/time(s):52.656363010406494
+Epoch 1/1:  70%|██████▉   | 394/563 [5:49:36<2:28:47, 52.82s/it]step:395 - train/loss:0.28177952766418457 - train/lr(1e-3):0.0022420155427047166 - train/time(s):53.20415163040161
+Epoch 1/1:  70%|███████   | 395/563 [5:50:30<2:28:13, 52.94s/it]step:396 - train/loss:0.2926889657974243 - train/lr(1e-3):0.0022175731734884368 - train/time(s):52.77803659439087
+Epoch 1/1:  70%|███████   | 396/563 [5:51:22<2:27:13, 52.89s/it]step:397 - train/loss:0.2863277196884155 - train/lr(1e-3):0.0021932267475794913 - train/time(s):52.82368326187134
+Epoch 1/1:  71%|███████   | 397/563 [5:52:15<2:26:16, 52.87s/it]step:398 - train/loss:0.27596980333328247 - train/lr(1e-3):0.002168977104488415 - train/time(s):53.45200157165527
+Epoch 1/1:  71%|███████   | 398/563 [5:53:09<2:25:52, 53.05s/it]step:399 - train/loss:0.29658007621765137 - train/lr(1e-3):0.002144825080388483 - train/time(s):52.64643168449402
+Epoch 1/1:  71%|███████   | 399/563 [5:54:01<2:24:40, 52.93s/it]step:400 - train/loss:0.2727377712726593 - train/lr(1e-3):0.002120771508086889 - train/time(s):53.021108865737915
+Epoch 1/1:  71%|███████   | 400/563 [5:54:54<2:23:52, 52.96s/it]step:401 - train/loss:0.2865016460418701 - train/lr(1e-3):0.00209681721699602 - train/time(s):52.730412006378174
+Epoch 1/1:  71%|███████   | 401/563 [5:55:47<2:22:48, 52.89s/it]step:402 - train/loss:0.29381656646728516 - train/lr(1e-3):0.002072963033104862 - train/time(s):52.85284900665283
+Epoch 1/1:  71%|███████▏  | 402/563 [5:56:40<2:21:54, 52.88s/it]step:403 - train/loss:0.2948543131351471 - train/lr(1e-3):0.002049209778950518 - train/time(s):52.53231453895569
+Epoch 1/1:  72%|███████▏  | 403/563 [5:57:32<2:20:44, 52.78s/it]step:404 - train/loss:0.29151156544685364 - train/lr(1e-3):0.0020255582735898385 - train/time(s):52.38523888587952
+Epoch 1/1:  72%|███████▏  | 404/563 [5:58:25<2:19:33, 52.66s/it]step:405 - train/loss:0.3021836280822754 - train/lr(1e-3):0.00200200933257119 - train/time(s):52.57905054092407
+Epoch 1/1:  72%|███████▏  | 405/563 [5:59:17<2:18:36, 52.64s/it]step:406 - train/loss:0.3000250458717346 - train/lr(1e-3):0.001978563767906326 - train/time(s):52.38894724845886
+Epoch 1/1:  72%|███████▏  | 406/563 [6:00:10<2:17:32, 52.56s/it]step:407 - train/loss:0.3102032542228699 - train/lr(1e-3):0.0019552223880423885 - train/time(s):53.26754021644592
+Epoch 1/1:  72%|███████▏  | 407/563 [6:01:03<2:17:13, 52.78s/it]step:408 - train/loss:0.29727494716644287 - train/lr(1e-3):0.0019319859978340313 - train/time(s):52.722288608551025
+Epoch 1/1:  72%|███████▏  | 408/563 [6:01:56<2:16:17, 52.76s/it]step:409 - train/loss:0.3023754358291626 - train/lr(1e-3):0.001908855398515669 - train/time(s):52.70295524597168
+Epoch 1/1:  73%|███████▎  | 409/563 [6:02:48<2:15:22, 52.75s/it]step:410 - train/loss:0.2733566164970398 - train/lr(1e-3):0.001885831387673846 - train/time(s):52.80502772331238
+Epoch 1/1:  73%|███████▎  | 410/563 [6:03:41<2:14:32, 52.76s/it]step:411 - train/loss:0.27681902050971985 - train/lr(1e-3):0.0018629147592197372 - train/time(s):52.68636631965637
+Epoch 1/1:  73%|███████▎  | 411/563 [6:04:34<2:13:36, 52.74s/it]step:412 - train/loss:0.29322269558906555 - train/lr(1e-3):0.001840106303361771 - train/time(s):53.04923987388611
+Epoch 1/1:  73%|███████▎  | 412/563 [6:05:27<2:12:58, 52.84s/it]step:413 - train/loss:0.309825599193573 - train/lr(1e-3):0.001817406806578377 - train/time(s):52.8349289894104
+Epoch 1/1:  73%|███████▎  | 413/563 [6:06:20<2:12:05, 52.84s/it]step:414 - train/loss:0.27964794635772705 - train/lr(1e-3):0.0017948170515908759 - train/time(s):53.15102744102478
+Epoch 1/1:  74%|███████▎  | 414/563 [6:07:13<2:11:26, 52.93s/it]step:415 - train/loss:0.2927611470222473 - train/lr(1e-3):0.0017723378173364836 - train/time(s):52.828460454940796
+Epoch 1/1:  74%|███████▎  | 415/563 [6:08:06<2:10:29, 52.90s/it]step:416 - train/loss:0.2763024568557739 - train/lr(1e-3):0.0017499698789414538 - train/time(s):52.7359504699707
+Epoch 1/1:  74%|███████▍  | 416/563 [6:08:59<2:09:29, 52.85s/it]step:417 - train/loss:0.29521244764328003 - train/lr(1e-3):0.0017277140076943484 - train/time(s):53.24839949607849
+Epoch 1/1:  74%|███████▍  | 417/563 [6:09:52<2:08:54, 52.97s/it]step:418 - train/loss:0.28490427136421204 - train/lr(1e-3):0.0017055709710194452 - train/time(s):52.60736155509949
+Epoch 1/1:  74%|███████▍  | 418/563 [6:10:44<2:07:45, 52.86s/it]step:419 - train/loss:0.28476816415786743 - train/lr(1e-3):0.0016835415324502718 - train/time(s):52.45738506317139
+Epoch 1/1:  74%|███████▍  | 419/563 [6:11:37<2:06:35, 52.74s/it]step:420 - train/loss:0.3004656434059143 - train/lr(1e-3):0.001661626451603281 - train/time(s):52.68994355201721
+Saving checkpoint to: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_420
+Checkpoint manager remove previous save local path: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_350
+[2026-10-10 18:33:22,727][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 1] Saved model to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_420/model_world_size_2_rank_1.pt
+[2026-10-10 18:33:23,744][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved model to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_420/model_world_size_2_rank_0.pt
+[2026-10-10 18:33:29,753][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 1] Saved optim to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_420/optim_world_size_2_rank_1.pt
+[2026-10-10 18:33:29,755][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 1] Saved extra_state to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_420/extra_state_world_size_2_rank_1.pt
+/root/pb-venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[2026-10-10 18:33:30,816][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved optim to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_420/optim_world_size_2_rank_0.pt
+[2026-10-10 18:33:30,817][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved extra_state to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_420/extra_state_world_size_2_rank_0.pt
+[2026-10-10 18:33:30,887][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved model config and tokenizer class to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_420/huggingface
+/root/pb-venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[2026-10-10 18:33:38,214][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved hf_model to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_420/huggingface
+Saved dataloader state to: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_420/data.pt
+Updated checkpoint tracker: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/latest_checkpointed_iteration.txt
+Epoch 1/1:  75%|███████▍  | 420/563 [6:12:53<2:22:04, 59.61s/it]step:421 - train/loss:0.2982427477836609 - train/lr(1e-3):0.0016398264841516565 - train/time(s):52.43650197982788
+Epoch 1/1:  75%|███████▍  | 421/563 [6:13:45<2:15:59, 57.46s/it]step:422 - train/loss:0.28025633096694946 - train/lr(1e-3):0.001618142381799256 - train/time(s):52.958950996398926
+Epoch 1/1:  75%|███████▍  | 422/563 [6:14:38<2:11:51, 56.11s/it]step:423 - train/loss:0.30359718203544617 - train/lr(1e-3):0.0015965748922546876 - train/time(s):53.307236671447754
+Epoch 1/1:  75%|███████▌  | 423/563 [6:15:31<2:08:57, 55.27s/it]step:424 - train/loss:0.2963210940361023 - train/lr(1e-3):0.0015751247592055335 - train/time(s):52.603074073791504
+Epoch 1/1:  75%|███████▌  | 424/563 [6:16:24<2:06:11, 54.47s/it]step:425 - train/loss:0.2821185290813446 - train/lr(1e-3):0.0015537927222927046 - train/time(s):52.755983114242554
+Epoch 1/1:  75%|███████▌  | 425/563 [6:17:17<2:04:06, 53.96s/it]step:426 - train/loss:0.28118354082107544 - train/lr(1e-3):0.0015325795170849316 - train/time(s):52.7807834148407
+Epoch 1/1:  76%|███████▌  | 426/563 [6:18:09<2:02:24, 53.61s/it]step:427 - train/loss:0.28022557497024536 - train/lr(1e-3):0.0015114858750534066 - train/time(s):52.32989573478699
+Epoch 1/1:  76%|███████▌  | 427/563 [6:19:02<2:00:38, 53.22s/it]step:428 - train/loss:0.30249106884002686 - train/lr(1e-3):0.001490512523546559 - train/time(s):53.120824098587036
+Epoch 1/1:  76%|███████▌  | 428/563 [6:19:55<1:59:41, 53.19s/it]step:429 - train/loss:0.2937678396701813 - train/lr(1e-3):0.001469660185764974 - train/time(s):52.9015052318573
+Epoch 1/1:  76%|███████▌  | 429/563 [6:20:48<1:58:36, 53.11s/it]step:430 - train/loss:0.29397863149642944 - train/lr(1e-3):0.0014489295807364557 - train/time(s):52.73461842536926
+Epoch 1/1:  76%|███████▋  | 430/563 [6:21:40<1:57:28, 53.00s/it]step:431 - train/loss:0.2784947156906128 - train/lr(1e-3):0.0014283214232912345 - train/time(s):52.55131721496582
+Epoch 1/1:  77%|███████▋  | 431/563 [6:22:33<1:56:18, 52.86s/it]step:432 - train/loss:0.2897137403488159 - train/lr(1e-3):0.0014078364240373193 - train/time(s):52.995718002319336
+Epoch 1/1:  77%|███████▋  | 432/563 [6:23:26<1:55:30, 52.90s/it]step:433 - train/loss:0.2778804302215576 - train/lr(1e-3):0.0013874752893359898 - train/time(s):52.94673800468445
+Epoch 1/1:  77%|███████▋  | 433/563 [6:24:19<1:54:39, 52.92s/it]step:434 - train/loss:0.3226126432418823 - train/lr(1e-3):0.0013672387212774458 - train/time(s):53.07860088348389
+Epoch 1/1:  77%|███████▋  | 434/563 [6:25:12<1:53:52, 52.97s/it]step:435 - train/loss:0.29607412219047546 - train/lr(1e-3):0.0013471274176565934 - train/time(s):53.18866300582886
+Epoch 1/1:  77%|███████▋  | 435/563 [6:26:05<1:53:08, 53.04s/it]step:436 - train/loss:0.28692787885665894 - train/lr(1e-3):0.001327142071948988 - train/time(s):52.5459144115448
+Epoch 1/1:  77%|███████▋  | 436/563 [6:26:58<1:51:57, 52.89s/it]step:437 - train/loss:0.2940925359725952 - train/lr(1e-3):0.0013072833732869166 - train/time(s):53.08066511154175
+Epoch 1/1:  78%|███████▊  | 437/563 [6:27:51<1:51:11, 52.95s/it]step:438 - train/loss:0.3136385679244995 - train/lr(1e-3):0.00128755200643564 - train/time(s):52.98672580718994
+Epoch 1/1:  78%|███████▊  | 438/563 [6:28:44<1:50:20, 52.96s/it]step:439 - train/loss:0.2655411958694458 - train/lr(1e-3):0.001267948651769777 - train/time(s):53.13762640953064
+Epoch 1/1:  78%|███████▊  | 439/563 [6:29:37<1:49:33, 53.02s/it]step:440 - train/loss:0.2901250720024109 - train/lr(1e-3):0.0012484739852498467 - train/time(s):52.9594030380249
+Epoch 1/1:  78%|███████▊  | 440/563 [6:30:30<1:48:39, 53.00s/it]step:441 - train/loss:0.2993190884590149 - train/lr(1e-3):0.0012291286783989597 - train/time(s):53.29866886138916
+Epoch 1/1:  78%|███████▊  | 441/563 [6:31:23<1:47:57, 53.09s/it]step:442 - train/loss:0.2990560531616211 - train/lr(1e-3):0.0012099133982796612 - train/time(s):52.83543157577515
+Epoch 1/1:  79%|███████▊  | 442/563 [6:32:16<1:46:55, 53.02s/it]step:443 - train/loss:0.29535946249961853 - train/lr(1e-3):0.001190828807470929 - train/time(s):52.90535306930542
+Epoch 1/1:  79%|███████▊  | 443/563 [6:33:09<1:45:58, 52.99s/it]step:444 - train/loss:0.29990243911743164 - train/lr(1e-3):0.0011718755640453288 - train/time(s):53.017351150512695
+Epoch 1/1:  79%|███████▉  | 444/563 [6:34:02<1:45:06, 53.00s/it]step:445 - train/loss:0.2969854772090912 - train/lr(1e-3):0.0011530543215463236 - train/time(s):52.899688482284546
+Epoch 1/1:  79%|███████▉  | 445/563 [6:34:55<1:44:10, 52.97s/it]step:446 - train/loss:0.29289284348487854 - train/lr(1e-3):0.0011343657289657335 - train/time(s):53.10161519050598
+Epoch 1/1:  79%|███████▉  | 446/563 [6:35:48<1:43:22, 53.01s/it]step:447 - train/loss:0.29948586225509644 - train/lr(1e-3):0.0011158104307213614 - train/time(s):52.864962339401245
+Epoch 1/1:  79%|███████▉  | 447/563 [6:36:41<1:42:24, 52.97s/it]step:448 - train/loss:0.2961195707321167 - train/lr(1e-3):0.0010973890666347702 - train/time(s):52.70974588394165
+Epoch 1/1:  80%|███████▉  | 448/563 [6:37:34<1:41:22, 52.89s/it]step:449 - train/loss:0.29197943210601807 - train/lr(1e-3):0.0010791022719092232 - train/time(s):52.695311546325684
+Epoch 1/1:  80%|███████▉  | 449/563 [6:38:26<1:40:23, 52.83s/it]step:450 - train/loss:0.3051973879337311 - train/lr(1e-3):0.0010609506771077765 - train/time(s):52.90898156166077
+Epoch 1/1:  80%|███████▉  | 450/563 [6:39:19<1:39:32, 52.86s/it]step:451 - train/loss:0.3062337338924408 - train/lr(1e-3):0.0010429349081315404 - train/time(s):52.894880294799805
+Epoch 1/1:  80%|████████  | 451/563 [6:40:12<1:38:41, 52.87s/it]step:452 - train/loss:0.2976856827735901 - train/lr(1e-3):0.001025055586198096 - train/time(s):53.125601053237915
+Epoch 1/1:  80%|████████  | 452/563 [6:41:05<1:37:57, 52.95s/it]step:453 - train/loss:0.29001152515411377 - train/lr(1e-3):0.0010073133278200703 - train/time(s):52.807660818099976
+Epoch 1/1:  80%|████████  | 453/563 [6:41:58<1:36:59, 52.91s/it]step:454 - train/loss:0.3064460754394531 - train/lr(1e-3):0.000989708744783885 - train/time(s):52.84530067443848
+Epoch 1/1:  81%|████████  | 454/563 [6:42:51<1:36:05, 52.89s/it]step:455 - train/loss:0.29683762788772583 - train/lr(1e-3):0.0009722424441286561 - train/time(s):52.891765117645264
+Epoch 1/1:  81%|████████  | 455/563 [6:43:44<1:35:12, 52.89s/it]step:456 - train/loss:0.2981494665145874 - train/lr(1e-3):0.0009549150281252633 - train/time(s):53.02775454521179
+Epoch 1/1:  81%|████████  | 456/563 [6:44:37<1:34:23, 52.93s/it]step:457 - train/loss:0.2952078580856323 - train/lr(1e-3):0.0009377270942555816 - train/time(s):53.027366399765015
+Epoch 1/1:  81%|████████  | 457/563 [6:45:30<1:33:34, 52.96s/it]step:458 - train/loss:0.27947911620140076 - train/lr(1e-3):0.0009206792351918809 - train/time(s):52.7624888420105
+Epoch 1/1:  81%|████████▏ | 458/563 [6:46:23<1:32:34, 52.90s/it]step:459 - train/loss:0.2864835262298584 - train/lr(1e-3):0.0009037720387763877 - train/time(s):52.92209029197693
+Epoch 1/1:  82%|████████▏ | 459/563 [6:47:16<1:31:42, 52.91s/it]step:460 - train/loss:0.28451696038246155 - train/lr(1e-3):0.0008870060880010163 - train/time(s):53.21388506889343
+Epoch 1/1:  82%|████████▏ | 460/563 [6:48:09<1:30:59, 53.00s/it]step:461 - train/loss:0.28675422072410583 - train/lr(1e-3):0.0008703819609872655 - train/time(s):52.60149264335632
+Epoch 1/1:  82%|████████▏ | 461/563 [6:49:01<1:29:54, 52.88s/it]step:462 - train/loss:0.29523706436157227 - train/lr(1e-3):0.0008539002309662863 - train/time(s):53.14227914810181
+Epoch 1/1:  82%|████████▏ | 462/563 [6:49:55<1:29:09, 52.96s/it]step:463 - train/loss:0.27611202001571655 - train/lr(1e-3):0.0008375614662591097 - train/time(s):52.74508595466614
+Epoch 1/1:  82%|████████▏ | 463/563 [6:50:47<1:28:09, 52.90s/it]step:464 - train/loss:0.2853938043117523 - train/lr(1e-3):0.0008213662302570563 - train/time(s):52.851744174957275
+Epoch 1/1:  82%|████████▏ | 464/563 [6:51:40<1:27:15, 52.89s/it]step:465 - train/loss:0.2946840524673462 - train/lr(1e-3):0.0008053150814023076 - train/time(s):53.257227182388306
+Epoch 1/1:  83%|████████▎ | 465/563 [6:52:33<1:26:33, 53.00s/it]step:466 - train/loss:0.2996373772621155 - train/lr(1e-3):0.0007894085731686485 - train/time(s):52.97925138473511
+Epoch 1/1:  83%|████████▎ | 466/563 [6:53:26<1:25:40, 52.99s/it]step:467 - train/loss:0.29885798692703247 - train/lr(1e-3):0.0007736472540423839 - train/time(s):52.95764946937561
+Epoch 1/1:  83%|████████▎ | 467/563 [6:54:19<1:24:46, 52.98s/it]step:468 - train/loss:0.2948773503303528 - train/lr(1e-3):0.0007580316675034255 - train/time(s):53.23909854888916
+Epoch 1/1:  83%|████████▎ | 468/563 [6:55:13<1:24:00, 53.06s/it]step:469 - train/loss:0.29605162143707275 - train/lr(1e-3):0.0007425623520065505 - train/time(s):52.747881174087524
+Epoch 1/1:  83%|████████▎ | 469/563 [6:56:05<1:22:59, 52.97s/it]step:470 - train/loss:0.3073376417160034 - train/lr(1e-3):0.0007272398409628362 - train/time(s):53.048508644104004
+Epoch 1/1:  83%|████████▎ | 470/563 [6:56:58<1:22:08, 52.99s/it]step:471 - train/loss:0.2871571183204651 - train/lr(1e-3):0.0007120646627212669 - train/time(s):53.130096197128296
+Epoch 1/1:  84%|████████▎ | 471/563 [6:57:52<1:21:19, 53.04s/it]step:472 - train/loss:0.3025784492492676 - train/lr(1e-3):0.0006970373405505148 - train/time(s):53.096729040145874
+Epoch 1/1:  84%|████████▍ | 472/563 [6:58:45<1:20:28, 53.06s/it]step:473 - train/loss:0.30713343620300293 - train/lr(1e-3):0.0006821583926208947 - train/time(s):52.974218130111694
+Epoch 1/1:  84%|████████▍ | 473/563 [6:59:38<1:19:32, 53.03s/it]step:474 - train/loss:0.2753727436065674 - train/lr(1e-3):0.0006674283319865016 - train/time(s):52.92671298980713
+Epoch 1/1:  84%|████████▍ | 474/563 [7:00:31<1:18:37, 53.00s/it]step:475 - train/loss:0.29394403100013733 - train/lr(1e-3):0.0006528476665675149 - train/time(s):52.80616545677185
+Epoch 1/1:  84%|████████▍ | 475/563 [7:01:23<1:17:39, 52.94s/it]step:476 - train/loss:0.2692761719226837 - train/lr(1e-3):0.0006384168991326872 - train/time(s):52.87015771865845
+Epoch 1/1:  85%|████████▍ | 476/563 [7:02:16<1:16:44, 52.92s/it]step:477 - train/loss:0.2795305550098419 - train/lr(1e-3):0.0006241365272820066 - train/time(s):52.73787879943848
+Epoch 1/1:  85%|████████▍ | 477/563 [7:03:09<1:15:46, 52.87s/it]step:478 - train/loss:0.27920350432395935 - train/lr(1e-3):0.0006100070434295379 - train/time(s):52.65522575378418
+Epoch 1/1:  85%|████████▍ | 478/563 [7:04:02<1:14:48, 52.81s/it]step:479 - train/loss:0.2815689444541931 - train/lr(1e-3):0.0005960289347864452 - train/time(s):52.84640383720398
+Epoch 1/1:  85%|████████▌ | 479/563 [7:04:55<1:13:56, 52.82s/it]step:480 - train/loss:0.3091738522052765 - train/lr(1e-3):0.0005822026833441901 - train/time(s):52.99991154670715
+Epoch 1/1:  85%|████████▌ | 480/563 [7:05:48<1:13:08, 52.88s/it]step:481 - train/loss:0.29083871841430664 - train/lr(1e-3):0.0005685287658579126 - train/time(s):52.835182428359985
+Epoch 1/1:  85%|████████▌ | 481/563 [7:06:40<1:12:14, 52.86s/it]step:482 - train/loss:0.31754881143569946 - train/lr(1e-3):0.0005550076538299931 - train/time(s):52.829017162323
+Epoch 1/1:  86%|████████▌ | 482/563 [7:07:33<1:11:21, 52.86s/it]step:483 - train/loss:0.30368584394454956 - train/lr(1e-3):0.0005416398134937879 - train/time(s):52.84150791168213
+Epoch 1/1:  86%|████████▌ | 483/563 [7:08:26<1:10:28, 52.85s/it]step:484 - train/loss:0.3038036525249481 - train/lr(1e-3):0.0005284257057975628 - train/time(s):53.07113790512085
+Epoch 1/1:  86%|████████▌ | 484/563 [7:09:19<1:09:40, 52.92s/it]step:485 - train/loss:0.3030765950679779 - train/lr(1e-3):0.0005153657863885903 - train/time(s):52.96496558189392
+Epoch 1/1:  86%|████████▌ | 485/563 [7:10:12<1:08:48, 52.93s/it]step:486 - train/loss:0.3136833906173706 - train/lr(1e-3):0.0005024605055974408 - train/time(s):53.009438276290894
+Epoch 1/1:  86%|████████▋ | 486/563 [7:11:05<1:07:57, 52.96s/it]step:487 - train/loss:0.2941664755344391 - train/lr(1e-3):0.0004897103084224564 - train/time(s):52.93148136138916
+Epoch 1/1:  87%|████████▋ | 487/563 [7:11:58<1:07:04, 52.95s/it]step:488 - train/loss:0.29253992438316345 - train/lr(1e-3):0.00047711563451440176 - train/time(s):52.71124887466431
+Epoch 1/1:  87%|████████▋ | 488/563 [7:12:51<1:06:06, 52.88s/it]step:489 - train/loss:0.28216350078582764 - train/lr(1e-3):0.0004646769181613098 - train/time(s):52.801931619644165
+Epoch 1/1:  87%|████████▋ | 489/563 [7:13:44<1:05:11, 52.86s/it]step:490 - train/loss:0.2929728031158447 - train/lr(1e-3):0.000452394588273502 - train/time(s):52.894307374954224
+Saving checkpoint to: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_490
+Checkpoint manager remove previous save local path: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_420
+[2026-10-10 19:35:30,669][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 1] Saved model to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_490/model_world_size_2_rank_1.pt
+[2026-10-10 19:35:31,917][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved model to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_490/model_world_size_2_rank_0.pt
+[2026-10-10 19:35:38,468][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 1] Saved optim to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_490/optim_world_size_2_rank_1.pt
+[2026-10-10 19:35:38,469][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 1] Saved extra_state to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_490/extra_state_world_size_2_rank_1.pt
+/root/pb-venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[2026-10-10 19:35:41,039][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved optim to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_490/optim_world_size_2_rank_0.pt
+[2026-10-10 19:35:41,041][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved extra_state to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_490/extra_state_world_size_2_rank_0.pt
+[2026-10-10 19:35:41,263][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved model config and tokenizer class to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_490/huggingface
+/root/pb-venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[2026-10-10 19:35:48,810][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved hf_model to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_490/huggingface
+Saved dataloader state to: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_490/data.pt
+Updated checkpoint tracker: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/latest_checkpointed_iteration.txt
+Epoch 1/1:  87%|████████▋ | 490/563 [7:15:03<1:14:03, 60.87s/it]step:491 - train/loss:0.2966085970401764 - train/lr(1e-3):0.00044026906836880104 - train/time(s):52.804590463638306
+Epoch 1/1:  87%|████████▋ | 491/563 [7:15:56<1:10:08, 58.45s/it]step:492 - train/loss:0.28130030632019043 - train/lr(1e-3):0.0004283007765579267 - train/time(s):52.537532567977905
+Epoch 1/1:  87%|████████▋ | 492/563 [7:16:49<1:07:04, 56.68s/it]step:493 - train/loss:0.3127167224884033 - train/lr(1e-3):0.00041649012553007797 - train/time(s):53.05355882644653
+Epoch 1/1:  88%|████████▊ | 493/563 [7:17:42<1:04:51, 55.59s/it]step:494 - train/loss:0.29141274094581604 - train/lr(1e-3):0.00040483752253870356 - train/time(s):53.04611396789551
+Epoch 1/1:  88%|████████▊ | 494/563 [7:18:35<1:03:03, 54.83s/it]step:495 - train/loss:0.2994248867034912 - train/lr(1e-3):0.00039334336938745996 - train/time(s):53.10457682609558
+Epoch 1/1:  88%|████████▊ | 495/563 [7:19:28<1:01:33, 54.31s/it]step:496 - train/loss:0.28455400466918945 - train/lr(1e-3):0.00038200806241635304 - train/time(s):52.78850746154785
+Epoch 1/1:  88%|████████▊ | 496/563 [7:20:21<1:00:08, 53.86s/it]step:497 - train/loss:0.2858685255050659 - train/lr(1e-3):0.00037083199248807655 - train/time(s):52.81375741958618
+Epoch 1/1:  88%|████████▊ | 497/563 [7:21:13<58:53, 53.55s/it]  step:498 - train/loss:0.3154815435409546 - train/lr(1e-3):0.00035981554497452887 - train/time(s):52.4024293422699
+Epoch 1/1:  88%|████████▊ | 498/563 [7:22:06<57:38, 53.20s/it]step:499 - train/loss:0.3009389638900757 - train/lr(1e-3):0.0003489590997435294 - train/time(s):52.979283571243286
+Epoch 1/1:  89%|████████▊ | 499/563 [7:22:59<56:40, 53.14s/it]step:500 - train/loss:0.3059343099594116 - train/lr(1e-3):0.00033826303114571805 - train/time(s):53.131640672683716
+Epoch 1/1:  89%|████████▉ | 500/563 [7:23:52<55:47, 53.14s/it]step:501 - train/loss:0.2664026618003845 - train/lr(1e-3):0.000327727708001645 - train/time(s):53.000009536743164
+Epoch 1/1:  89%|████████▉ | 501/563 [7:24:45<54:52, 53.10s/it]step:502 - train/loss:0.2861980199813843 - train/lr(1e-3):0.00031735349358905817 - train/time(s):52.67819166183472
+Epoch 1/1:  89%|████████▉ | 502/563 [7:25:38<53:51, 52.97s/it]step:503 - train/loss:0.29153260588645935 - train/lr(1e-3):0.00030714074563037045 - train/time(s):53.06765842437744
+Epoch 1/1:  89%|████████▉ | 503/563 [7:26:31<53:00, 53.00s/it]step:504 - train/loss:0.28740108013153076 - train/lr(1e-3):0.0002970898162803287 - train/time(s):53.11019325256348
+Epoch 1/1:  90%|████████▉ | 504/563 [7:27:24<52:09, 53.04s/it]step:505 - train/loss:0.27725911140441895 - train/lr(1e-3):0.00028720105211387187 - train/time(s):52.91817331314087
+Epoch 1/1:  90%|████████▉ | 505/563 [7:28:17<51:14, 53.00s/it]step:506 - train/loss:0.28864380717277527 - train/lr(1e-3):0.00027747479411417643 - train/time(s):53.06482934951782
+Epoch 1/1:  90%|████████▉ | 506/563 [7:29:10<50:22, 53.02s/it]step:507 - train/loss:0.2855414152145386 - train/lr(1e-3):0.0002679113776609016 - train/time(s):52.825817584991455
+Epoch 1/1:  90%|█████████ | 507/563 [7:30:03<49:26, 52.96s/it]step:508 - train/loss:0.30501633882522583 - train/lr(1e-3):0.00025851113251862347 - train/time(s):52.784281492233276
+Epoch 1/1:  90%|█████████ | 508/563 [7:30:55<48:30, 52.91s/it]step:509 - train/loss:0.2882823944091797 - train/lr(1e-3):0.0002492743828254657 - train/time(s):53.31283617019653
+Epoch 1/1:  90%|█████████ | 509/563 [7:31:49<47:43, 53.03s/it]step:510 - train/loss:0.28270936012268066 - train/lr(1e-3):0.00024020144708192026 - train/time(s):52.96166682243347
+Epoch 1/1:  91%|█████████ | 510/563 [7:32:42<46:49, 53.01s/it]step:511 - train/loss:0.30611640214920044 - train/lr(1e-3):0.00023129263813986722 - train/time(s):52.724618673324585
+Epoch 1/1:  91%|█████████ | 511/563 [7:33:34<45:52, 52.93s/it]step:512 - train/loss:0.3066721558570862 - train/lr(1e-3):0.00022254826319178468 - train/time(s):53.10111093521118
+Epoch 1/1:  91%|█████████ | 512/563 [7:34:27<45:02, 52.98s/it]step:513 - train/loss:0.27761173248291016 - train/lr(1e-3):0.00021396862376015904 - train/time(s):53.01021718978882
+Epoch 1/1:  91%|█████████ | 513/563 [7:35:20<44:09, 52.99s/it]step:514 - train/loss:0.2999194264411926 - train/lr(1e-3):0.00020555401568708557 - train/time(s):52.59160757064819
+Epoch 1/1:  91%|█████████▏| 514/563 [7:36:13<43:10, 52.87s/it]step:515 - train/loss:0.30935198068618774 - train/lr(1e-3):0.00019730472912406818 - train/time(s):52.9758198261261
+Epoch 1/1:  91%|█████████▏| 515/563 [7:37:06<42:19, 52.90s/it]step:516 - train/loss:0.29643774032592773 - train/lr(1e-3):0.0001892210485220153 - train/time(s):52.74160432815552
+Epoch 1/1:  92%|█████████▏| 516/563 [7:37:59<41:24, 52.86s/it]step:517 - train/loss:0.31696808338165283 - train/lr(1e-3):0.00018130325262142756 - train/time(s):53.008705615997314
+Epoch 1/1:  92%|█████████▏| 517/563 [7:38:52<40:33, 52.90s/it]step:518 - train/loss:0.30508625507354736 - train/lr(1e-3):0.00017355161444279344 - train/time(s):52.76463317871094
+Epoch 1/1:  92%|█████████▏| 518/563 [7:39:45<39:38, 52.86s/it]step:519 - train/loss:0.2659909725189209 - train/lr(1e-3):0.00016596640127716777 - train/time(s):52.715882778167725
+Epoch 1/1:  92%|█████████▏| 519/563 [7:40:37<38:44, 52.82s/it]step:520 - train/loss:0.27780473232269287 - train/lr(1e-3):0.00015854787467695975 - train/time(s):52.45337796211243
+Epoch 1/1:  92%|█████████▏| 520/563 [7:41:30<37:46, 52.71s/it]step:521 - train/loss:0.2779577374458313 - train/lr(1e-3):0.0001512962904469112 - train/time(s):52.6877019405365
+Epoch 1/1:  93%|█████████▎| 521/563 [7:42:22<36:53, 52.71s/it]step:522 - train/loss:0.2937907576560974 - train/lr(1e-3):0.0001442118986352775 - train/time(s):52.92615246772766
+Epoch 1/1:  93%|█████████▎| 522/563 [7:43:15<36:03, 52.77s/it]step:523 - train/loss:0.2854013741016388 - train/lr(1e-3):0.0001372949435252058 - train/time(s):53.185317516326904
+Epoch 1/1:  93%|█████████▎| 523/563 [7:44:09<35:15, 52.90s/it]step:524 - train/loss:0.28199076652526855 - train/lr(1e-3):0.00013054566362631084 - train/time(s):52.77716684341431
+Epoch 1/1:  93%|█████████▎| 524/563 [7:45:01<34:21, 52.86s/it]step:525 - train/loss:0.3010386824607849 - train/lr(1e-3):0.00012396429166645074 - train/time(s):52.86000895500183
+Epoch 1/1:  93%|█████████▎| 525/563 [7:45:54<33:28, 52.86s/it]step:526 - train/loss:0.29588642716407776 - train/lr(1e-3):0.0001175510545837022 - train/time(s):53.19310712814331
+Epoch 1/1:  93%|█████████▎| 526/563 [7:46:47<32:39, 52.96s/it]step:527 - train/loss:0.2883117198944092 - train/lr(1e-3):0.00011130617351853446 - train/time(s):52.74213004112244
+Epoch 1/1:  94%|█████████▎| 527/563 [7:47:40<31:44, 52.90s/it]step:528 - train/loss:0.28733301162719727 - train/lr(1e-3):0.00010522986380618606 - train/time(s):52.75620079040527
+Epoch 1/1:  94%|█████████▍| 528/563 [7:48:33<30:49, 52.86s/it]step:529 - train/loss:0.2828201949596405 - train/lr(1e-3):9.932233496923904e-05 - train/time(s):52.66624045372009
+Epoch 1/1:  94%|█████████▍| 529/563 [7:49:26<29:55, 52.80s/it]step:530 - train/loss:0.2910371422767639 - train/lr(1e-3):9.358379071039148e-05 - train/time(s):52.64950227737427
+Epoch 1/1:  94%|█████████▍| 530/563 [7:50:18<29:01, 52.76s/it]step:531 - train/loss:0.2814669907093048 - train/lr(1e-3):8.801442890543743e-05 - train/time(s):52.850345849990845
+Epoch 1/1:  94%|█████████▍| 531/563 [7:51:11<28:09, 52.79s/it]step:532 - train/loss:0.29033181071281433 - train/lr(1e-3):8.261444159644083e-05 - train/time(s):52.800965785980225
+Epoch 1/1:  94%|█████████▍| 532/563 [7:52:04<27:16, 52.79s/it]step:533 - train/loss:0.30156004428863525 - train/lr(1e-3):7.738401498511406e-05 - train/time(s):52.654515981674194
+Epoch 1/1:  95%|█████████▍| 533/563 [7:52:57<26:22, 52.75s/it]step:534 - train/loss:0.30201536417007446 - train/lr(1e-3):7.232332942639974e-05 - train/time(s):52.805745124816895
+Epoch 1/1:  95%|█████████▍| 534/563 [7:53:49<25:30, 52.77s/it]step:535 - train/loss:0.28180718421936035 - train/lr(1e-3):6.743255942224914e-05 - train/time(s):52.76529312133789
+Epoch 1/1:  95%|█████████▌| 535/563 [7:54:42<24:37, 52.77s/it]step:536 - train/loss:0.3053687810897827 - train/lr(1e-3):6.27118736156046e-05 - train/time(s):52.793800354003906
+Epoch 1/1:  95%|█████████▌| 536/563 [7:55:35<23:45, 52.78s/it]step:537 - train/loss:0.29662585258483887 - train/lr(1e-3):5.816143478458714e-05 - train/time(s):53.0953311920166
+Epoch 1/1:  95%|█████████▌| 537/563 [7:56:28<22:54, 52.87s/it]step:538 - train/loss:0.29878097772598267 - train/lr(1e-3):5.378139983688135e-05 - train/time(s):52.50318622589111
+Epoch 1/1:  96%|█████████▌| 538/563 [7:57:21<21:59, 52.76s/it]step:539 - train/loss:0.3082464337348938 - train/lr(1e-3):4.957191980432541e-05 - train/time(s):52.904606103897095
+Epoch 1/1:  96%|█████████▌| 539/563 [7:58:13<21:07, 52.81s/it]step:540 - train/loss:0.28863203525543213 - train/lr(1e-3):4.553313983770457e-05 - train/time(s):52.83481454849243
+Epoch 1/1:  96%|█████████▌| 540/563 [7:59:06<20:14, 52.82s/it]step:541 - train/loss:0.31318825483322144 - train/lr(1e-3):4.1665199201744165e-05 - train/time(s):52.91619348526001
+Epoch 1/1:  96%|█████████▌| 541/563 [7:59:59<19:22, 52.85s/it]step:542 - train/loss:0.2909295856952667 - train/lr(1e-3):3.796823127030724e-05 - train/time(s):52.69634699821472
+Epoch 1/1:  96%|█████████▋| 542/563 [8:00:52<18:28, 52.80s/it]step:543 - train/loss:0.28587132692337036 - train/lr(1e-3):3.444236352179831e-05 - train/time(s):52.708224296569824
+Epoch 1/1:  96%|█████████▋| 543/563 [8:01:45<17:35, 52.78s/it]step:544 - train/loss:0.3014945983886719 - train/lr(1e-3):3.1087717534764585e-05 - train/time(s):52.862098932266235
+Epoch 1/1:  97%|█████████▋| 544/563 [8:02:37<16:43, 52.80s/it]step:545 - train/loss:0.26415199041366577 - train/lr(1e-3):2.790440898370661e-05 - train/time(s):52.93587899208069
+Epoch 1/1:  97%|█████████▋| 545/563 [8:03:30<15:51, 52.84s/it]step:546 - train/loss:0.2789101004600525 - train/lr(1e-3):2.4892547635086416e-05 - train/time(s):52.47658896446228
+Epoch 1/1:  97%|█████████▋| 546/563 [8:04:23<14:56, 52.74s/it]step:547 - train/loss:0.30641961097717285 - train/lr(1e-3):2.2052237343545003e-05 - train/time(s):53.135475397109985
+Epoch 1/1:  97%|█████████▋| 547/563 [8:05:16<14:05, 52.86s/it]step:548 - train/loss:0.2973007559776306 - train/lr(1e-3):1.9383576048320752e-05 - train/time(s):53.235249042510986
+Epoch 1/1:  97%|█████████▋| 548/563 [8:06:09<13:14, 52.97s/it]step:549 - train/loss:0.3084052801132202 - train/lr(1e-3):1.688665576987103e-05 - train/time(s):52.96471405029297
+Epoch 1/1:  98%|█████████▊| 549/563 [8:07:02<12:21, 52.97s/it]step:550 - train/loss:0.298650860786438 - train/lr(1e-3):1.4561562606701385e-05 - train/time(s):52.616562366485596
+Epoch 1/1:  98%|█████████▊| 550/563 [8:07:55<11:27, 52.87s/it]step:551 - train/loss:0.29065871238708496 - train/lr(1e-3):1.2408376732394589e-05 - train/time(s):52.53947043418884
+Epoch 1/1:  98%|█████████▊| 551/563 [8:08:47<10:33, 52.77s/it]step:552 - train/loss:0.2968211770057678 - train/lr(1e-3):1.0427172392847297e-05 - train/time(s):52.78209614753723
+Epoch 1/1:  98%|█████████▊| 552/563 [8:09:40<09:40, 52.77s/it]step:553 - train/loss:0.3009297549724579 - train/lr(1e-3):8.618017903708199e-06 - train/time(s):52.77673888206482
+Epoch 1/1:  98%|█████████▊| 553/563 [8:10:33<08:47, 52.78s/it]step:554 - train/loss:0.2937335669994354 - train/lr(1e-3):6.9809756480265785e-06 - train/time(s):52.646399974823
+Epoch 1/1:  98%|█████████▊| 554/563 [8:11:26<07:54, 52.74s/it]step:555 - train/loss:0.2857958674430847 - train/lr(1e-3):5.516102074095697e-06 - train/time(s):53.2021586894989
+Epoch 1/1:  99%|█████████▊| 555/563 [8:12:19<07:03, 52.88s/it]step:556 - train/loss:0.30825453996658325 - train/lr(1e-3):4.223447693509907e-06 - train/time(s):52.89233708381653
+Epoch 1/1:  99%|█████████▉| 556/563 [8:13:12<06:10, 52.88s/it]step:557 - train/loss:0.2941209375858307 - train/lr(1e-3):3.103057079422711e-06 - train/time(s):53.06627130508423
+Epoch 1/1:  99%|█████████▉| 557/563 [8:14:05<05:17, 52.94s/it]step:558 - train/loss:0.29047244787216187 - train/lr(1e-3):2.1549688650079894e-06 - train/time(s):52.585381746292114
+Epoch 1/1:  99%|█████████▉| 558/563 [8:14:57<04:24, 52.83s/it]step:559 - train/loss:0.2881300449371338 - train/lr(1e-3):1.379215742129958e-06 - train/time(s):52.71503233909607
+Epoch 1/1:  99%|█████████▉| 559/563 [8:15:50<03:31, 52.80s/it]step:560 - train/loss:0.2862553000450134 - train/lr(1e-3):7.758244602151799e-07 - train/time(s):52.9894483089447
+Saving checkpoint to: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_560
+Checkpoint manager remove previous save local path: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_490
+[2026-10-10 20:37:36,413][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 1] Saved model to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_560/model_world_size_2_rank_1.pt
+[2026-10-10 20:37:36,812][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved model to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_560/model_world_size_2_rank_0.pt
+[2026-10-10 20:37:43,482][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 1] Saved optim to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_560/optim_world_size_2_rank_1.pt
+[2026-10-10 20:37:43,484][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 1] Saved extra_state to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_560/extra_state_world_size_2_rank_1.pt
+/root/pb-venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[2026-10-10 20:37:45,626][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved optim to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_560/optim_world_size_2_rank_0.pt
+[2026-10-10 20:37:45,627][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved extra_state to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_560/extra_state_world_size_2_rank_0.pt
+[2026-10-10 20:37:45,696][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved model config and tokenizer class to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_560/huggingface
+/root/pb-venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[2026-10-10 20:37:53,606][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved hf_model to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_560/huggingface
+Saved dataloader state to: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_560/data.pt
+Updated checkpoint tracker: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/latest_checkpointed_iteration.txt
+Epoch 1/1:  99%|█████████▉| 560/563 [8:17:08<03:00, 60.30s/it]step:561 - train/loss:0.30212706327438354 - train/lr(1e-3):3.4481582532774895e-07 - train/time(s):52.82559847831726
+Epoch 1/1: 100%|█████████▉| 561/563 [8:18:01<01:56, 58.06s/it]step:562 - train/loss:0.2814871668815613 - train/lr(1e-3):8.6204699457082e-08 - train/time(s):52.342440128326416
+Epoch 1/1: 100%|█████████▉| 562/563 [8:18:53<00:56, 56.34s/it]step:563 - train/loss:0.29072362184524536 - train/lr(1e-3):0.0 - train/time(s):52.99181342124939
+step:563 - val/loss:0.2666543126106262
+Saving checkpoint to: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_563
+Checkpoint manager remove previous save local path: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_560
+[2026-10-10 20:40:48,338][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 1] Saved model to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_563/model_world_size_2_rank_1.pt
+[2026-10-10 20:40:48,682][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved model to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_563/model_world_size_2_rank_0.pt
+[2026-10-10 20:40:55,639][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved optim to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_563/optim_world_size_2_rank_0.pt
+[2026-10-10 20:40:55,640][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved extra_state to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_563/extra_state_world_size_2_rank_0.pt
+[2026-10-10 20:40:55,708][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved model config and tokenizer class to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_563/huggingface
+/root/pb-venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[2026-10-10 20:40:55,993][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 1] Saved optim to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_563/optim_world_size_2_rank_1.pt
+[2026-10-10 20:40:55,994][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 1] Saved extra_state to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_563/extra_state_world_size_2_rank_1.pt
+/root/pb-venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[2026-10-10 20:41:04,179][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved hf_model to /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_563/huggingface
+Saved dataloader state to: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/global_step_563/data.pt
+Updated checkpoint tracker: /root/autodl-tmp/project-b-opd/runs/train/D-SFT/ckpt/latest_checkpointed_iteration.txt
+Total time for train steps: 29783.92s
+Final validation metrics: {'val/loss': 0.2666543126106262}
+Epoch 1/1: 100%|█████████▉| 562/563 [8:20:19<00:53, 53.41s/it]
+++ date +%s
++ echo '{"train_wall_sec": 30060, "ngpus": 2}'

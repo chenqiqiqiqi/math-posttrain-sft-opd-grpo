@@ -1,0 +1,20 @@
+{
+  "name": "D-SFT@490",
+  "model": "/root/autodl-tmp/project-b-opd/runs/train/D-SFT/hf/step_490",
+  "data": "/root/autodl-tmp/project-b-opd/data/prepared/dev_deepmath200.parquet",
+  "rows": 200,
+  "k": 8,
+  "max_tokens": 16384,
+  "temperature": 0.7,
+  "top_p": 0.95,
+  "seed": 42,
+  "enable_thinking": "none",
+  "tp": 1,
+  "top_k": -1,
+  "stop_token_ids": [],
+  "dtype": "bfloat16",
+  "vllm": "0.11.0",
+  "elapsed_sec": 2502.6,
+  "generated_tokens": 9573119,
+  "example_prompt": "<｜begin▁of▁sentence｜><｜User｜>Consider the set of integers, \\(\\Bbb{Z}\\). As we divide each integer by increasing divisors \\(2, 3, 4, \\ldots\\), the elements of the resulting sets get closer together. What is the limiting set as the divisor approaches infinity? Please reason step by step, and put your final answer within \\boxed{}.<｜Assistant｜><think>\n"
+}

@@ -1,0 +1,112 @@
++ export TENSORBOARD_DIR=/root/autodl-tmp/project-b-opd/runs/train/func-sft/tensorboard PYTHONUNBUFFERED=1 HYDRA_FULL_ERROR=1
++ TENSORBOARD_DIR=/root/autodl-tmp/project-b-opd/runs/train/func-sft/tensorboard
++ PYTHONUNBUFFERED=1
++ HYDRA_FULL_ERROR=1
++ case "$SFT_DATA" in
++ SFT_DATA=/root/autodl-tmp/project-b-opd/runs/sft_data/func/sft_data.parquet
+++ date -Is
++ echo 'date: 2026-10-08T02:56:51+08:00'
++ echo 'student: /root/autodl-tmp/models/S0'
++ echo 'sft_data: /root/autodl-tmp/project-b-opd/runs/sft_data/func/sft_data.parquet'
+++ sha256sum /root/autodl-tmp/project-b-opd/runs/sft_data/func/sft_data.parquet
+++ cut '-d ' -f1
++ echo 'sft_data_sha256: 64bfd11001f92b06c0c8e87464a72e703bb833b14c7ff2a85f99e68cbd025590'
++ echo 'ngpus: 1'
++ echo 'dtype: fp32'
+++ git -C /root/autodl-tmp/project-b-opd rev-parse HEAD
+++ echo none
++ echo 'git: none'
++ nvidia-smi --query-gpu=name,memory.total --format=csv,noheader
+++ date +%s
++ T0=1791399411
++ torchrun --standalone --nnodes=1 --nproc_per_node=1 -m verl.trainer.fsdp_sft_trainer data.train_files=/root/autodl-tmp/project-b-opd/runs/sft_data/func/sft_data.parquet data.val_files=/root/autodl-tmp/project-b-opd/runs/sft_data/func/sft_data.parquet data.val_max_samples=32 data.prompt_key=prompt data.response_key=response data.multiturn.enable=false data.train_batch_size=64 data.micro_batch_size_per_gpu=1 data.max_length=8192 data.truncation=error model.partial_pretrain=/root/autodl-tmp/models/S0 model.fsdp_config.model_dtype=fp32 model.enable_gradient_checkpointing=True use_remove_padding=True optim.lr=1e-5 optim.lr_scheduler=cosine optim.lr_warmup_steps_ratio=0.05 trainer.total_epochs=1 trainer.total_training_steps=2 trainer.save_freq=-1 trainer.test_freq=-1 'trainer.logger=['\''console'\'','\''tensorboard'\'']' trainer.project_name=project-b-opd trainer.experiment_name=func-sft trainer.n_gpus_per_node=1 trainer.default_local_dir=/root/autodl-tmp/project-b-opd/runs/train/func-sft/ckpt 'trainer.checkpoint.save_contents=['\''model'\'','\''hf_model'\'']' trainer.resume_mode=disable
+/root/pb-venv/lib/python3.12/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/root/pb-venv/lib/python3.12/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+dataset len: 28
+dataset len: 28
+Normalize batch size by dp 1
+Using sequence parallel size: 1
+Using remove padding: True
+Using FSDP rank 0 and size 1 for data distribution
+`torch_dtype` is deprecated! Use `dtype` instead!
+Flash Attention 2 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2ForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", dtype=torch.float16)`
+Flash Attention 2 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2Model is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", dtype=torch.float16)`
+Monkey patch _flash_attention_forward in transformers.integrations.flash_attention
+Skipping monkey patch for Qwen2ForCausalLM as use_fused_kernels is False or fused_kernels_backend is None
+functools.partial(<function _or_policy at 0x7fbac50ae8e0>, policies=[functools.partial(<function transformer_auto_wrap_policy at 0x7fbac50ae7a0>, transformer_layer_cls={<class 'transformers.models.qwen2.modeling_qwen2.Qwen2DecoderLayer'>})])
+NCCL version 2.27.3+cuda12.9
+Number of steps/epoch 0, number of epochs 1, total number of steps 0
+{'optim': {'_target_': 'verl.workers.config.FSDPOptimizerConfig', 'optimizer': 'AdamW', 'optimizer_impl': 'torch.optim', 'lr': 1e-05, 'lr_warmup_steps_ratio': 0.05, 'total_training_steps': -1, 'weight_decay': 0.01, 'lr_warmup_steps': -1, 'betas': [0.9, 0.95], 'clip_grad': 1.0, 'min_lr_ratio': 0.0, 'num_cycles': 0.5, 'lr_scheduler_type': 'constant', 'warmup_style': None, 'override_optimizer_config': None, 'lr_scheduler': 'cosine'}, 'data': {'train_batch_size': 64, 'micro_batch_size': None, 'micro_batch_size_per_gpu': 1, 'train_files': '/root/autodl-tmp/project-b-opd/runs/sft_data/func/sft_data.parquet', 'val_files': '/root/autodl-tmp/project-b-opd/runs/sft_data/func/sft_data.parquet', 'train_max_samples': -1, 'val_max_samples': 32, 'prompt_key': 'prompt', 'response_key': 'response', 'prompt_dict_keys': None, 'response_dict_keys': None, 'multiturn': {'enable': False, 'messages_key': 'messages', 'tools_key': 'tools', 'enable_thinking_key': 'enable_thinking'}, 'max_length': 8192, 'truncation': 'error', 'balance_dp_token': False, 'chat_template': None, 'custom_cls': {'path': None, 'name': None}, 'use_shm': False, 'apply_chat_template_kwargs': {}}, 'model': {'partial_pretrain': '/root/autodl-tmp/models/S0', 'use_shm': False, 'fsdp_config': {'model_dtype': 'fp32', 'wrap_policy': {'min_num_params': 0}, 'cpu_offload': False, 'offload_params': False}, 'external_lib': None, 'enable_gradient_checkpointing': True, 'trust_remote_code': False, 'lora_rank': 0, 'lora_alpha': 16, 'target_modules': 'all-linear', 'use_liger': False, 'strategy': 'fsdp2'}, 'ulysses_sequence_parallel_size': 1, 'use_remove_padding': True, 'trainer': {'default_local_dir': '/root/autodl-tmp/project-b-opd/runs/train/func-sft/ckpt', 'default_hdfs_dir': None, 'project_name': 'project-b-opd', 'experiment_name': 'func-sft', 'total_epochs': 1, 'total_training_steps': 2, 'logger': ['console', 'tensorboard'], 'seed': 1, 'save_freq': -1, 'test_freq': -1, 'nnodes': 1, 'n_gpus_per_node': 1, 'max_ckpt_to_keep': None, 'resume_mode': 'disable', 'resume_from_path': None, 'checkpoint': {'save_contents': ['model', 'hf_model'], 'load_contents': '${trainer.checkpoint.save_contents}'}, 'device': 'cuda'}}
+Saving tensorboard log to /root/autodl-tmp/project-b-opd/runs/train/func-sft/tensorboard.
+Error executing job with overrides: ['data.train_files=/root/autodl-tmp/project-b-opd/runs/sft_data/func/sft_data.parquet', 'data.val_files=/root/autodl-tmp/project-b-opd/runs/sft_data/func/sft_data.parquet', 'data.val_max_samples=32', 'data.prompt_key=prompt', 'data.response_key=response', 'data.multiturn.enable=false', 'data.train_batch_size=64', 'data.micro_batch_size_per_gpu=1', 'data.max_length=8192', 'data.truncation=error', 'model.partial_pretrain=/root/autodl-tmp/models/S0', 'model.fsdp_config.model_dtype=fp32', 'model.enable_gradient_checkpointing=True', 'use_remove_padding=True', 'optim.lr=1e-5', 'optim.lr_scheduler=cosine', 'optim.lr_warmup_steps_ratio=0.05', 'trainer.total_epochs=1', 'trainer.total_training_steps=2', 'trainer.save_freq=-1', 'trainer.test_freq=-1', "trainer.logger=['console','tensorboard']", 'trainer.project_name=project-b-opd', 'trainer.experiment_name=func-sft', 'trainer.n_gpus_per_node=1', 'trainer.default_local_dir=/root/autodl-tmp/project-b-opd/runs/train/func-sft/ckpt', "trainer.checkpoint.save_contents=['model','hf_model']", 'trainer.resume_mode=disable']
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "<frozen runpy>", line 198, in _run_module_as_main
+[rank0]:   File "<frozen runpy>", line 88, in _run_code
+[rank0]:   File "/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/trainer/fsdp_sft_trainer.py", line 862, in <module>
+[rank0]:     main()
+[rank0]:   File "/root/pb-venv/lib/python3.12/site-packages/hydra/main.py", line 94, in decorated_main
+[rank0]:     _run_hydra(
+[rank0]:   File "/root/pb-venv/lib/python3.12/site-packages/hydra/_internal/utils.py", line 394, in _run_hydra
+[rank0]:     _run_app(
+[rank0]:   File "/root/pb-venv/lib/python3.12/site-packages/hydra/_internal/utils.py", line 457, in _run_app
+[rank0]:     run_and_report(
+[rank0]:   File "/root/pb-venv/lib/python3.12/site-packages/hydra/_internal/utils.py", line 223, in run_and_report
+[rank0]:     raise ex
+[rank0]:   File "/root/pb-venv/lib/python3.12/site-packages/hydra/_internal/utils.py", line 220, in run_and_report
+[rank0]:     return func()
+[rank0]:            ^^^^^^
+[rank0]:   File "/root/pb-venv/lib/python3.12/site-packages/hydra/_internal/utils.py", line 458, in <lambda>
+[rank0]:     lambda: hydra.run(
+[rank0]:             ^^^^^^^^^^
+[rank0]:   File "/root/pb-venv/lib/python3.12/site-packages/hydra/_internal/hydra.py", line 132, in run
+[rank0]:     _ = ret.return_value
+[rank0]:         ^^^^^^^^^^^^^^^^
+[rank0]:   File "/root/pb-venv/lib/python3.12/site-packages/hydra/core/utils.py", line 263, in return_value
+[rank0]:     raise self._return_value
+[rank0]:   File "/root/pb-venv/lib/python3.12/site-packages/hydra/core/utils.py", line 189, in run_job
+[rank0]:     ret.return_value = task_function(task_cfg)
+[rank0]:                        ^^^^^^^^^^^^^^^^^^^^^^^
+[rank0]:   File "/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/trainer/fsdp_sft_trainer.py", line 838, in main
+[rank0]:     run_sft(config)
+[rank0]:   File "/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/trainer/fsdp_sft_trainer.py", line 831, in run_sft
+[rank0]:     trainer.fit()
+[rank0]:   File "/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/trainer/fsdp_sft_trainer.py", line 746, in fit
+[rank0]:     start_epoch = global_step // self.steps_per_epoch
+[rank0]:                   ~~~~~~~~~~~~^^~~~~~~~~~~~~~~~~~~~~~
+[rank0]: ZeroDivisionError: integer division or modulo by zero
+[rank0]:[W1008 02:57:07.944739671 ProcessGroupNCCL.cpp:1538] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+E1008 02:57:08.563000 27119 torch/distributed/elastic/multiprocessing/api.py:874] failed (exitcode: 1) local_rank: 0 (pid: 27186) of binary: /root/pb-venv/bin/python3.12
+Traceback (most recent call last):
+  File "/root/pb-venv/bin/torchrun", line 6, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/root/pb-venv/lib/python3.12/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/root/pb-venv/lib/python3.12/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/root/pb-venv/lib/python3.12/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/root/pb-venv/lib/python3.12/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/pb-venv/lib/python3.12/site-packages/torch/distributed/launcher/api.py", line 277, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+verl.trainer.fsdp_sft_trainer FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-10-08_02:57:08
+  host      : localhost
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 27186)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

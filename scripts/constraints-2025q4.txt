@@ -1,0 +1,15 @@
+# 把依赖锁在与 verl v0.7.0 / vLLM 0.11.0 同时期（2025 年秋）的版本。
+# 上游安装脚本只写了 transformers>=4.51.0，2026 年会装到 5.x，与 verl 0.7 / vLLM 0.11 不兼容。
+# 依据：上游 verl/docker/verl0.6-cu128-torch2.8.0 镜像固定 transformers==4.55.4；vLLM 0.11.0 要求 >=4.55.2。
+transformers==4.57.1
+tokenizers==0.22.1
+huggingface_hub==0.35.3
+numpy==1.26.4
+accelerate==1.10.1
+peft==0.17.1
+datasets==4.1.1
+ray==2.49.2
+liger-kernel==0.6.2
+scipy==1.15.3
+opencv-python-headless==4.11.0.86
+cupy-cuda12x==13.6.0

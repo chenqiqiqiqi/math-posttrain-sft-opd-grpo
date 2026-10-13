@@ -1,0 +1,2 @@
+20G	runs/train/D-GRPO/ckpt
+ARM_OK final_step=92 2026-10-09T22:48:43+08:00

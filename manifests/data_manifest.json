@@ -1,0 +1,84 @@
+{
+  "seed": 42,
+  "threshold": 0.6,
+  "embed_model": "sentence-transformers/all-mpnet-base-v2",
+  "embed_revision": "e8c3b32edf5434bc2275fc9bab85f82640a19130",
+  "sets": {
+    "test_aime24": {
+      "rows": 30,
+      "sha256": "a38c7047efdfa6d310c51f59de0831c6ad6e642204019a0689d974b887d25f0c"
+    },
+    "test_aime25": {
+      "rows": 30,
+      "sha256": "4330710f4aaca8d63dcefed032d0df4a7b4d90eebab86f51e1fef1c719fc38dc"
+    },
+    "test_amc23": {
+      "rows": 40,
+      "sha256": "c7cbd3172d334903c093418b88b3243418ee60a8f71703b7eb13747e494e230b"
+    },
+    "test_aime26": {
+      "rows": 30,
+      "sha256": "84850ec2648f47393e037af59f7ccd10b36bb4589fd07842cbb139bab3a2e4d5"
+    },
+    "sanity_math500": {
+      "rows": 500,
+      "sha256": "8caed812d715116714140f42d50968d6df0ce10529b3bfdc3f24491d8717939b"
+    },
+    "dev_deepmath400": {
+      "rows": 400,
+      "sha256": "f7c2280fb1f6693c7cd85159a0795fcf7433fa69990d1d2d3998a30bd81e628f"
+    },
+    "train_dapo": {
+      "rows": 15740,
+      "sha256": "1c266ccf86c9dbd16a0f76802641fc358c768e69eb189c448c134957f59e37f5"
+    },
+    "train_ot3": {
+      "rows": 25480,
+      "sha256": "03399e9d2c4394e4f20b5fb874d1e156cd4bb7628b01a3fc8ebf986ce48cbef8"
+    },
+    "dev_deepmath200": {
+      "rows": 200,
+      "sha256": "45857ec0b4fd82cc2b0f8154bd93eac3a13aadb4bd12c498c982eaea3c407337",
+      "derived_from": "dev_deepmath400, seed 42"
+    }
+  },
+  "decontam": {
+    "train_dapo": {
+      "test": {
+        "exact": 6,
+        "semantic_only": 2171,
+        "total": 2177
+      },
+      "removed": 2177,
+      "kept": 15740
+    },
+    "train_ot3": {
+      "test": {
+        "exact": 0,
+        "semantic_only": 4520,
+        "total": 4520
+      },
+      "removed": 4520,
+      "kept": 25480
+    },
+    "dev_pool": {
+      "test": {
+        "exact": 0,
+        "semantic_only": 8,
+        "total": 8
+      },
+      "train_dapo": {
+        "exact": 0,
+        "semantic_only": 59,
+        "total": 59
+      },
+      "train_ot3": {
+        "exact": 0,
+        "semantic_only": 1090,
+        "total": 1090
+      },
+      "removed": 1144,
+      "kept": 12972
+    }
+  }
+}

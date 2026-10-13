@@ -1,0 +1,2 @@
+2026-10-11T16:15:12+08:00 TEST_REBALANCE armed (wait for D-T on gpu1)
+2026-10-11T17:33:38+08:00 TEST_REBALANCE switched (D0 continues pid=878937; gpu1 restarts D-OPD)

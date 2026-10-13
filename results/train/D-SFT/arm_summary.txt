@@ -1,0 +1,4 @@
+B_wall=69528.15 m=4 2026-10-10T00:35:27+08:00
+kept=36091 steps=563 save_freq=70
+27G	runs/train/D-SFT/ckpt
+ARM_OK final_step=563 2026-10-10T20:41:56+08:00

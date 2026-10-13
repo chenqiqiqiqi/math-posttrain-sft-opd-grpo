@@ -1,0 +1,2 @@
+20G	runs/train/D-OPD/ckpt
+ARM_OK final_step=150 2026-10-09T01:43:50+08:00

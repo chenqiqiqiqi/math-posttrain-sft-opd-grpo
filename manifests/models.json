@@ -1,0 +1,32 @@
+{
+  "S0": {
+    "repo": "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
+    "revision": "ad9f0ae0864d7fbcd1cd905e3c6c5b069cc8b562",
+    "path": "/root/autodl-tmp/models/S0",
+    "verified": true
+  },
+  "T": {
+    "repo": "hbx/JustRL-DeepSeek-1.5B",
+    "revision": "0637e4096c789c67f9eecbe8355e0bdeddede1c2",
+    "path": "/root/autodl-tmp/models/T",
+    "verified": true
+  },
+  "QB": {
+    "repo": "Qwen/Qwen3-1.7B-Base",
+    "revision": "ea980cb0a6c2ae4b936e82123acc929f1cec04c1",
+    "path": "/root/autodl-tmp/models/QB",
+    "verified": true
+  },
+  "QS": {
+    "repo": "Thinking-Space/Qwen3-1.7B-SFT",
+    "revision": "f0065babe7440257d7db331a5aa442ef7c3cf266",
+    "path": "/root/autodl-tmp/models/QS",
+    "verified": true
+  },
+  "QT": {
+    "repo": "Qwen/Qwen3-4B",
+    "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+    "path": "/root/autodl-tmp/models/QT",
+    "verified": true
+  }
+}

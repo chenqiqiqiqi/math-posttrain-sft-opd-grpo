@@ -1,0 +1,8 @@
+{
+  "repo": "https://github.com/Thinking-Space/Rethinking-OPD",
+  "commit": "ac26e38d6f1572eb027597b48a9f4e01f6915ef8",
+  "commit_date": "2026-08-20T18:23:49Z",
+  "tarball_sha256": "dc2ab08b7e9a9f1e714c5c5479bec04ecc7c4a0d14f23fe2ec6706c7fc6be2bf",
+  "downloaded": "2026-10-07",
+  "note": "codeload tarball of main; git clone returned HTTP 502 on that day"
+}

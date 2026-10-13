@@ -1,0 +1,2 @@
+21G	runs/train/Q-SFT-OPD/ckpt
+ARM_OK final_step=40 2026-10-11T10:14:45+08:00

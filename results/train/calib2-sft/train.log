@@ -1,0 +1,81 @@
++ export TENSORBOARD_DIR=/root/autodl-tmp/project-b-opd/runs/train/calib2-sft/tensorboard PYTHONUNBUFFERED=1 HYDRA_FULL_ERROR=1
++ TENSORBOARD_DIR=/root/autodl-tmp/project-b-opd/runs/train/calib2-sft/tensorboard
++ PYTHONUNBUFFERED=1
++ HYDRA_FULL_ERROR=1
++ case "$SFT_DATA" in
++ SFT_DATA=/root/autodl-tmp/project-b-opd/runs/sft_data/calib2/sft_data_192.parquet
+++ date -Is
++ echo 'date: 2026-10-08T05:51:55+08:00'
++ echo 'student: /root/autodl-tmp/models/S0'
++ echo 'sft_data: /root/autodl-tmp/project-b-opd/runs/sft_data/calib2/sft_data_192.parquet'
+++ sha256sum /root/autodl-tmp/project-b-opd/runs/sft_data/calib2/sft_data_192.parquet
+++ cut '-d ' -f1
++ echo 'sft_data_sha256: 08372fa65371f30395d6d264ec91f9fae5e72530b1d2950c747c7393368eea83'
++ echo 'ngpus: 2'
++ echo 'dtype: fp32'
+++ git -C /root/autodl-tmp/project-b-opd rev-parse HEAD
+++ echo none
++ echo 'git: none'
++ nvidia-smi --query-gpu=name,memory.total --format=csv,noheader
+++ date +%s
++ T0=1791409915
++ torchrun --standalone --nnodes=1 --nproc_per_node=2 -m verl.trainer.fsdp_sft_trainer data.train_files=/root/autodl-tmp/project-b-opd/runs/sft_data/calib2/sft_data_192.parquet data.val_files=/root/autodl-tmp/project-b-opd/runs/sft_data/calib2/sft_data_192.parquet data.val_max_samples=32 data.prompt_key=prompt data.response_key=response data.multiturn.enable=false data.train_batch_size=64 data.micro_batch_size_per_gpu=1 data.max_length=8192 data.truncation=error model.partial_pretrain=/root/autodl-tmp/models/S0 model.fsdp_config.model_dtype=fp32 model.enable_gradient_checkpointing=True use_remove_padding=True optim.lr=1e-5 optim.lr_scheduler=cosine optim.lr_warmup_steps_ratio=0.05 trainer.total_epochs=1 trainer.total_training_steps=3 trainer.save_freq=-1 trainer.test_freq=-1 'trainer.logger=['\''console'\'','\''tensorboard'\'']' trainer.project_name=project-b-opd trainer.experiment_name=calib2-sft trainer.n_gpus_per_node=2 trainer.default_local_dir=/root/autodl-tmp/project-b-opd/runs/train/calib2-sft/ckpt 'trainer.checkpoint.save_contents=['\''model'\'','\''hf_model'\'']' trainer.resume_mode=disable
+/root/pb-venv/lib/python3.12/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+W1008 05:51:56.965000 42216 torch/distributed/run.py:774] 
+W1008 05:51:56.965000 42216 torch/distributed/run.py:774] *****************************************
+W1008 05:51:56.965000 42216 torch/distributed/run.py:774] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+W1008 05:51:56.965000 42216 torch/distributed/run.py:774] *****************************************
+/root/pb-venv/lib/python3.12/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/root/pb-venv/lib/python3.12/site-packages/torch/cuda/__init__.py:63: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+dataset len: 192
+dataset len: 192
+selected 32 random samples out of 192
+Normalize batch size by dp 2
+Using sequence parallel size: 1
+Using remove padding: True
+Using FSDP rank 0 and size 2 for data distribution
+`torch_dtype` is deprecated! Use `dtype` instead!
+Flash Attention 2 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2ForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", dtype=torch.float16)`
+Flash Attention 2 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2Model is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", dtype=torch.float16)`
+dataset len: 192
+dataset len: 192
+selected 32 random samples out of 192
+`torch_dtype` is deprecated! Use `dtype` instead!
+Flash Attention 2 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2ForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", dtype=torch.float16)`
+Flash Attention 2 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in Qwen2Model is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", dtype=torch.float16)`
+Monkey patch _flash_attention_forward in transformers.integrations.flash_attention
+Skipping monkey patch for Qwen2ForCausalLM as use_fused_kernels is False or fused_kernels_backend is None
+functools.partial(<function _or_policy at 0x7f0eb70aa980>, policies=[functools.partial(<function transformer_auto_wrap_policy at 0x7f0eb70aa840>, transformer_layer_cls={<class 'transformers.models.qwen2.modeling_qwen2.Qwen2DecoderLayer'>})])
+Monkey patch _flash_attention_forward in transformers.integrations.flash_attention
+Skipping monkey patch for Qwen2ForCausalLM as use_fused_kernels is False or fused_kernels_backend is None
+NCCL version 2.27.3+cuda12.9
+Number of steps/epoch 3, number of epochs 1, total number of steps 3
+{'optim': {'_target_': 'verl.workers.config.FSDPOptimizerConfig', 'optimizer': 'AdamW', 'optimizer_impl': 'torch.optim', 'lr': 1e-05, 'lr_warmup_steps_ratio': 0.05, 'total_training_steps': -1, 'weight_decay': 0.01, 'lr_warmup_steps': -1, 'betas': [0.9, 0.95], 'clip_grad': 1.0, 'min_lr_ratio': 0.0, 'num_cycles': 0.5, 'lr_scheduler_type': 'constant', 'warmup_style': None, 'override_optimizer_config': None, 'lr_scheduler': 'cosine'}, 'data': {'train_batch_size': 32, 'micro_batch_size': None, 'micro_batch_size_per_gpu': 1, 'train_files': '/root/autodl-tmp/project-b-opd/runs/sft_data/calib2/sft_data_192.parquet', 'val_files': '/root/autodl-tmp/project-b-opd/runs/sft_data/calib2/sft_data_192.parquet', 'train_max_samples': -1, 'val_max_samples': 32, 'prompt_key': 'prompt', 'response_key': 'response', 'prompt_dict_keys': None, 'response_dict_keys': None, 'multiturn': {'enable': False, 'messages_key': 'messages', 'tools_key': 'tools', 'enable_thinking_key': 'enable_thinking'}, 'max_length': 8192, 'truncation': 'error', 'balance_dp_token': False, 'chat_template': None, 'custom_cls': {'path': None, 'name': None}, 'use_shm': False, 'apply_chat_template_kwargs': {}}, 'model': {'partial_pretrain': '/root/autodl-tmp/models/S0', 'use_shm': False, 'fsdp_config': {'model_dtype': 'fp32', 'wrap_policy': {'min_num_params': 0}, 'cpu_offload': False, 'offload_params': False}, 'external_lib': None, 'enable_gradient_checkpointing': True, 'trust_remote_code': False, 'lora_rank': 0, 'lora_alpha': 16, 'target_modules': 'all-linear', 'use_liger': False, 'strategy': 'fsdp2'}, 'ulysses_sequence_parallel_size': 1, 'use_remove_padding': True, 'trainer': {'default_local_dir': '/root/autodl-tmp/project-b-opd/runs/train/calib2-sft/ckpt', 'default_hdfs_dir': None, 'project_name': 'project-b-opd', 'experiment_name': 'calib2-sft', 'total_epochs': 1, 'total_training_steps': 3, 'logger': ['console', 'tensorboard'], 'seed': 1, 'save_freq': -1, 'test_freq': -1, 'nnodes': 1, 'n_gpus_per_node': 2, 'max_ckpt_to_keep': None, 'resume_mode': 'disable', 'resume_from_path': None, 'checkpoint': {'save_contents': ['model', 'hf_model'], 'load_contents': '${trainer.checkpoint.save_contents}'}, 'device': 'cuda'}}
+Saving tensorboard log to /root/autodl-tmp/project-b-opd/runs/train/calib2-sft/tensorboard.
+Epoch 1/1:   0%|          | 0/3 [00:00<?, ?it/s]step:1 - train/loss:0.42247796058654785 - train/lr(1e-3):0.0075000000000000015 - train/time(s):53.3358256816864
+Epoch 1/1:  33%|███▎      | 1/3 [00:53<01:47, 53.98s/it]step:2 - train/loss:0.4009737968444824 - train/lr(1e-3):0.0025000000000000014 - train/time(s):52.12635850906372
+Epoch 1/1:  67%|██████▋   | 2/3 [01:46<00:52, 52.89s/it]step:3 - train/loss:0.3842853605747223 - train/lr(1e-3):0.0 - train/time(s):52.051634073257446
+step:3 - val/loss:0.40113070607185364
+/root/pb-venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+/root/pb-venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+Saving checkpoint to: /root/autodl-tmp/project-b-opd/runs/train/calib2-sft/ckpt/global_step_3
+[2026-10-08 05:54:58,546][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved model to /root/autodl-tmp/project-b-opd/runs/train/calib2-sft/ckpt/global_step_3/model_world_size_2_rank_0.pt
+[2026-10-08 05:54:58,563][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 1] Saved model to /root/autodl-tmp/project-b-opd/runs/train/calib2-sft/ckpt/global_step_3/model_world_size_2_rank_1.pt
+/root/pb-venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[2026-10-08 05:54:58,620][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved model config and tokenizer class to /root/autodl-tmp/project-b-opd/runs/train/calib2-sft/ckpt/global_step_3/huggingface
+/root/pb-venv/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+[2026-10-08 05:55:05,937][/root/autodl-tmp/project-b-opd/upstream/Rethinking-OPD/verl/verl/utils/checkpoint/fsdp_checkpoint_manager.py][INFO] - [Rank 0] Saved hf_model to /root/autodl-tmp/project-b-opd/runs/train/calib2-sft/ckpt/global_step_3/huggingface
+Saved dataloader state to: /root/autodl-tmp/project-b-opd/runs/train/calib2-sft/ckpt/global_step_3/data.pt
+Updated checkpoint tracker: /root/autodl-tmp/project-b-opd/runs/train/calib2-sft/ckpt/latest_checkpointed_iteration.txt
+Total time for train steps: 157.51s
+Final validation metrics: {'val/loss': 0.40113070607185364}
+Epoch 1/1:  67%|██████▋   | 2/3 [02:56<01:28, 88.21s/it]
+++ date +%s
++ echo '{"train_wall_sec": 192, "ngpus": 2}'

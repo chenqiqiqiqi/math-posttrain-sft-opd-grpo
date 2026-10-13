@@ -1,0 +1,248 @@
+{
+ "S0": {
+  "repo": "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
+  "revision": "ad9f0ae0864d7fbcd1cd905e3c6c5b069cc8b562",
+  "files": {
+   ".gitattributes": {
+    "size": 1519,
+    "sha256": null
+   },
+   "LICENSE": {
+    "size": 1064,
+    "sha256": null
+   },
+   "README.md": {
+    "size": 15994,
+    "sha256": null
+   },
+   "config.json": {
+    "size": 679,
+    "sha256": null
+   },
+   "figures/benchmark.jpg": {
+    "size": 777314,
+    "sha256": null
+   },
+   "generation_config.json": {
+    "size": 181,
+    "sha256": null
+   },
+   "model.safetensors": {
+    "size": 3554214621,
+    "sha256": "58858233513d76b8703e72eed6ce16807b523328188e13329257fb9594462945"
+   },
+   "tokenizer.json": {
+    "size": 7031660,
+    "sha256": null
+   },
+   "tokenizer_config.json": {
+    "size": 3071,
+    "sha256": null
+   }
+  }
+ },
+ "T": {
+  "repo": "hbx/JustRL-DeepSeek-1.5B",
+  "revision": "0637e4096c789c67f9eecbe8355e0bdeddede1c2",
+  "files": {
+   ".gitattributes": {
+    "size": 1626,
+    "sha256": null
+   },
+   "README.md": {
+    "size": 9087,
+    "sha256": null
+   },
+   "assets/fig1_aime24_curves_added.png": {
+    "size": 395136,
+    "sha256": "55e10fc37dbdee38f23dccfa144a6cf4fcadb6b87192927d4561e685ff15d482"
+   },
+   "config.json": {
+    "size": 703,
+    "sha256": null
+   },
+   "generation_config.json": {
+    "size": 181,
+    "sha256": null
+   },
+   "model.safetensors": {
+    "size": 3554214752,
+    "sha256": "1bedcdf243c4e2e633fa04c05617809cf6a1bbc1a07221609035f6347efecffb"
+   },
+   "tokenizer.json": {
+    "size": 7031660,
+    "sha256": null
+   },
+   "tokenizer_config.json": {
+    "size": 3071,
+    "sha256": null
+   }
+  }
+ },
+ "QB": {
+  "repo": "Qwen/Qwen3-1.7B-Base",
+  "revision": "ea980cb0a6c2ae4b936e82123acc929f1cec04c1",
+  "files": {
+   ".gitattributes": {
+    "size": 1519,
+    "sha256": null
+   },
+   "LICENSE": {
+    "size": 11343,
+    "sha256": null
+   },
+   "README.md": {
+    "size": 2941,
+    "sha256": null
+   },
+   "config.json": {
+    "size": 727,
+    "sha256": null
+   },
+   "generation_config.json": {
+    "size": 138,
+    "sha256": null
+   },
+   "merges.txt": {
+    "size": 1671853,
+    "sha256": null
+   },
+   "model.safetensors": {
+    "size": 3441185608,
+    "sha256": "6df85b39330e5a425ee36253d0f894e4387e4f0a15b9c53cb467d668e6b3a841"
+   },
+   "tokenizer.json": {
+    "size": 7031645,
+    "sha256": null
+   },
+   "tokenizer_config.json": {
+    "size": 9678,
+    "sha256": null
+   },
+   "vocab.json": {
+    "size": 2776833,
+    "sha256": null
+   }
+  }
+ },
+ "QS": {
+  "repo": "Thinking-Space/Qwen3-1.7B-SFT",
+  "revision": "f0065babe7440257d7db331a5aa442ef7c3cf266",
+  "files": {
+   ".gitattributes": {
+    "size": 1570,
+    "sha256": null
+   },
+   "README.md": {
+    "size": 5175,
+    "sha256": null
+   },
+   "added_tokens.json": {
+    "size": 707,
+    "sha256": null
+   },
+   "chat_template.jinja": {
+    "size": 4116,
+    "sha256": null
+   },
+   "config.json": {
+    "size": 1361,
+    "sha256": null
+   },
+   "generation_config.json": {
+    "size": 139,
+    "sha256": null
+   },
+   "merges.txt": {
+    "size": 1671853,
+    "sha256": null
+   },
+   "model.safetensors": {
+    "size": 4063515640,
+    "sha256": "e894f9b220e27940e535c8a459a3cef9e5d9ad43f76e0fc2f503f972c88b82cb"
+   },
+   "special_tokens_map.json": {
+    "size": 613,
+    "sha256": null
+   },
+   "tokenizer.json": {
+    "size": 11422654,
+    "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+   },
+   "tokenizer_config.json": {
+    "size": 5431,
+    "sha256": null
+   },
+   "trainer_state.json": {
+    "size": 126507,
+    "sha256": null
+   },
+   "training_args.bin": {
+    "size": 7480,
+    "sha256": "1b2f5e4779be0ba6a7b8f9744b981f06d18c10de51f7176811db9019894e6093"
+   },
+   "vocab.json": {
+    "size": 2776833,
+    "sha256": null
+   }
+  }
+ },
+ "QT": {
+  "repo": "Qwen/Qwen3-4B",
+  "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+  "files": {
+   ".gitattributes": {
+    "size": 1570,
+    "sha256": null
+   },
+   "LICENSE": {
+    "size": 11343,
+    "sha256": null
+   },
+   "README.md": {
+    "size": 16857,
+    "sha256": null
+   },
+   "config.json": {
+    "size": 726,
+    "sha256": null
+   },
+   "generation_config.json": {
+    "size": 239,
+    "sha256": null
+   },
+   "merges.txt": {
+    "size": 1671853,
+    "sha256": null
+   },
+   "model-00001-of-00003.safetensors": {
+    "size": 3957900840,
+    "sha256": "328a91d3122359d5547f9d79521205bc0a46e1f79a792dfe650e99fc2d651223"
+   },
+   "model-00002-of-00003.safetensors": {
+    "size": 3987450520,
+    "sha256": "6cd087b316306a68c562436b5492edbcf6e16c6dba3a1308279caa5a58e21ca5"
+   },
+   "model-00003-of-00003.safetensors": {
+    "size": 99630640,
+    "sha256": "e4bf436957184f4eeb86a80e9db394503f1f56446b2e6b7edeac5b81470f4ca1"
+   },
+   "model.safetensors.index.json": {
+    "size": 32819,
+    "sha256": null
+   },
+   "tokenizer.json": {
+    "size": 11422654,
+    "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+   },
+   "tokenizer_config.json": {
+    "size": 9732,
+    "sha256": null
+   },
+   "vocab.json": {
+    "size": 2776833,
+    "sha256": null
+   }
+  }
+ }
+}

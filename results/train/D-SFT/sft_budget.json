@@ -1,0 +1,16 @@
+{
+ "B_wall": 69528.15,
+ "gen_wall": 42262.4,
+ "train_wall_ok_attempts": 30061,
+ "total_wall": 72323.4,
+ "ratio_to_B": 1.040203140742275,
+ "kept": 36091,
+ "generated": 62960,
+ "truncation_rate": 0.4268,
+ "attempts": [
+  {
+   "attempt_train_wall_sec": 30061,
+   "rc": 0
+  }
+ ]
+}

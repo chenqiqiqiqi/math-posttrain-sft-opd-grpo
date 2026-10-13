@@ -1,0 +1,2 @@
+ARM_FAILED rc=1 final_step=40 2026-10-11T02:31:05+08:00（未删除任何检查点）
+STOPPED_AMEND8 final_step=40 2026-10-11T02:31:20+08:00（协议补充 8：Q 族改为 40 步；终点 hf/step_40 已导出）
